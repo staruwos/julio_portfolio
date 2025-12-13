@@ -3,108 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Experience | Game Dev Portfolio</title>
+    <title>/EXPERIENCE | JULIO</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .timeline-item {
-            position: relative;
-            padding-bottom: 2.5rem;
-            padding-left: 2.5rem;
-            border-left: 2px solid #374151; /* Gray 700 */
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -9px;
-            top: 4px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background-color: #6366f1; /* Indigo 500 */
-            border: 2px solid #1f2937; /* Gray 800 */
-        }
-        .skill-bar-bg { background-color: #374151; height: 8px; border-radius: 4px; }
-        .skill-bar-fill { background-color: #10b981; height: 8px; border-radius: 4px; }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="terminal.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body class="p-4">
 
-    <div class="container mx-auto px-4 py-12">
-        <header class="text-center mb-16">
-            <a href="index.html" class="text-gray-500 hover:text-white mb-4 inline-block">&larr; Back to Home</a>
-            <h1 class="text-4xl font-bold text-white">Experience & Skills</h1>
+    <div class="container mx-auto max-w-6xl py-12">
+        
+        <header class="mb-12 border-b-2 border-dashed border-gray-600 pb-8">
+            <div class="mb-4">
+                <a href="index.html" class="text-cyan-500 hover:text-white inline-block font-bold">
+                    &lt; /home/
+                </a>
+            </div>
+            <h1 class="text-4xl font-bold text-white mb-2">/EXPERIENCE_LOG</h1>
+            <p class="text-lg text-gray-400 font-mono">
+                > cat career_history.txt | grep "GameDev"
+            </p>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
             
             <div>
-                <h2 class="text-2xl font-bold text-white mb-8 border-b border-gray-700 pb-2">Career Timeline</h2>
-                
-                <div class="timeline-item">
-                    <span class="absolute left-12 top-2 text-xs font-semibold text-indigo-400">2022 - Present</span>
-                    <h3 class="text-xl font-semibold text-white">Gameplay Programmer</h3>
-                    <div class="text-gray-400 text-sm mb-2">Indie Studio X</div>
-                    <p class="text-gray-500 text-sm">Led the development of player mechanics and UI systems for an RPG. Optimized garbage collection overhead in Unity.</p>
-                </div>
+                <div class="tui-window p-8 h-full">
+                    <div class="tui-title">CAREER_PATH.LOG</div>
+                    
+                    <div class="space-y-8 mt-4">
+                        
+                        <div class="tui-timeline-item border-l-2 border-dashed border-gray-600 pl-6 relative">
+                            <span class="absolute -left-3 top-0 bg-black text-green-400 px-2 font-bold text-sm border border-green-900">
+                                [2022-PRESENT]
+                            </span>
+                            
+                            <h3 class="text-xl font-bold text-white mt-6">Gameplay Programmer</h3>
+                            <div class="text-cyan-500 text-sm mb-2">@ Indie_Studio_X</div>
+                            <p class="text-gray-400 font-mono text-sm">
+                                > Led dev of player mechanics & UI systems.<br>
+                                > Optimized GC overhead in Unity (reduced spikes by 40%).<br>
+                                > implemented_features: [Inventory, Questing, SaveSystem]
+                            </p>
+                        </div>
 
-                <div class="timeline-item">
-                    <span class="absolute left-12 top-2 text-xs font-semibold text-indigo-400">2020 - 2022</span>
-                    <h3 class="text-xl font-semibold text-white">Junior Developer</h3>
-                    <div class="text-gray-400 text-sm mb-2">Mobile Games Corp</div>
-                    <p class="text-gray-500 text-sm">Worked on live-ops updates for casual mobile titles. Integrated ad mediation SDKs and analytics.</p>
-                </div>
+                        <div class="tui-timeline-item border-l-2 border-dashed border-gray-600 pl-6 relative">
+                            <span class="absolute -left-3 top-0 bg-black text-gray-400 px-2 font-bold text-sm border border-gray-700">
+                                [2020-2022]
+                            </span>
+                            
+                            <h3 class="text-xl font-bold text-white mt-6">Junior Developer</h3>
+                            <div class="text-cyan-500 text-sm mb-2">@ Mobile_Games_Corp</div>
+                            <p class="text-gray-400 font-mono text-sm">
+                                > Live-ops updates for casual mobile titles.<br>
+                                > Integrated AdMob SDKs and Firebase Analytics.<br>
+                                > refactored_legacy_codebase.sh
+                            </p>
+                        </div>
 
-                <div class="timeline-item" style="border-left-color: transparent;">
-                    <span class="absolute left-12 top-2 text-xs font-semibold text-indigo-400">2016 - 2020</span>
-                    <h3 class="text-xl font-semibold text-white">B.S. Computer Science</h3>
-                    <div class="text-gray-400 text-sm mb-2">University of Tech</div>
-                    <p class="text-gray-500 text-sm">Specialized in Computer Graphics and Artificial Intelligence.</p>
+                        <div class="tui-timeline-item border-l-2 border-dashed border-gray-600 pl-6 relative">
+                            <span class="absolute -left-3 top-0 bg-black text-gray-400 px-2 font-bold text-sm border border-gray-700">
+                                [2016-2020]
+                            </span>
+                            
+                            <h3 class="text-xl font-bold text-white mt-6">B.S. Computer Science</h3>
+                            <div class="text-cyan-500 text-sm mb-2">@ University_of_Tech</div>
+                            <p class="text-gray-400 font-mono text-sm">
+                                > Major: Computer Graphics & AI.<br>
+                                > Thesis: "Procedural Generation in Voxel Engines".
+                            </p>
+                        </div>
+
+                    </div>
                 </div>
             </div>
 
             <div>
-                <h2 class="text-2xl font-bold text-white mb-8 border-b border-gray-700 pb-2">Technical Proficiency</h2>
-                
-                <div class="bg-gray-800 p-6 rounded-lg shadow-lg border border-gray-700 space-y-6">
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-white">Unity / C#</span>
-                            <span class="text-xs text-gray-400">Expert</span>
-                        </div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill w-11/12 bg-indigo-500"></div></div>
-                    </div>
+                <div class="tui-window p-8 h-full">
+                    <div class="tui-title">STATS_DUMP.DAT</div>
 
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-white">Unreal / C++</span>
-                            <span class="text-xs text-gray-400">Advanced</span>
+                    <div class="space-y-8 mt-4">
+                        
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-green-400 font-bold">UNITY / C#</span>
+                                <span class="text-gray-500 text-xs">[LVL: EXPERT]</span>
+                            </div>
+                            <div class="w-full bg-gray-900 border border-gray-700">
+                                <div class="tui-progress-bar" style="width: 95%;"></div> 
+                            </div>
                         </div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill w-9/12 bg-indigo-500"></div></div>
-                    </div>
 
-                    <div>
-                        <div class="flex justify-between mb-1">
-                            <span class="text-sm font-medium text-white">Shader Graph / HLSL</span>
-                            <span class="text-xs text-gray-400">Intermediate</span>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-green-400 font-bold">UNREAL / C++</span>
+                                <span class="text-gray-500 text-xs">[LVL: ADVANCED]</span>
+                            </div>
+                            <div class="w-full bg-gray-900 border border-gray-700">
+                                <div class="tui-progress-bar" style="width: 75%;"></div> 
+                            </div>
                         </div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill w-7/12 bg-purple-500"></div></div>
-                    </div>
 
-                    <div class="mt-6 pt-6 border-t border-gray-700">
-                        <h4 class="text-white font-semibold mb-3">Tools & APIs</h4>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-gray-900 text-gray-400 text-xs rounded border border-gray-600">Git</span>
-                            <span class="px-2 py-1 bg-gray-900 text-gray-400 text-xs rounded border border-gray-600">Jenkins</span>
-                            <span class="px-2 py-1 bg-gray-900 text-gray-400 text-xs rounded border border-gray-600">Blender</span>
-                            <span class="px-2 py-1 bg-gray-900 text-gray-400 text-xs rounded border border-gray-600">FMOD</span>
-                            <span class="px-2 py-1 bg-gray-900 text-gray-400 text-xs rounded border border-gray-600">Steamworks API</span>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-purple-400 font-bold">HLSL / SHADERS</span>
+                                <span class="text-gray-500 text-xs">[LVL: INTERMEDIATE]</span>
+                            </div>
+                            <div class="w-full bg-gray-900 border border-gray-700">
+                                <div class="tui-progress-bar" style="width: 50%;"></div> 
+                            </div>
                         </div>
+
+                        <div class="pt-6 border-t border-dashed border-gray-600">
+                            <h4 class="text-white font-bold mb-4 uppercase">> LOADED_MODULES (TOOLS)</h4>
+                            <div class="flex flex-wrap gap-3">
+                                <span class="text-cyan-500 border border-cyan-500 px-2 py-1 text-xs hover:bg-cyan-500 hover:text-black cursor-default transition-colors">[Git]</span>
+                                <span class="text-cyan-500 border border-cyan-500 px-2 py-1 text-xs hover:bg-cyan-500 hover:text-black cursor-default transition-colors">[Jenkins]</span>
+                                <span class="text-cyan-500 border border-cyan-500 px-2 py-1 text-xs hover:bg-cyan-500 hover:text-black cursor-default transition-colors">[Blender]</span>
+                                <span class="text-cyan-500 border border-cyan-500 px-2 py-1 text-xs hover:bg-cyan-500 hover:text-black cursor-default transition-colors">[FMOD]</span>
+                                <span class="text-cyan-500 border border-cyan-500 px-2 py-1 text-xs hover:bg-cyan-500 hover:text-black cursor-default transition-colors">[Steamworks_API]</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
         </div>
+    </div>
+    
+    <div class="status-bar">
+        <div class="key-hint"><span>F1</span>Help</div>
+        <div class="key-hint"><span>F5</span>Refresh</div>
+        <div class="key-hint ml-auto">UPTIME: 3Y 20D</div>
     </div>
 
 </body>

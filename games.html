@@ -3,69 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects | Game Dev Portfolio</title>
+    <title>/PROJECTS | JULIO</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        .game-card { transition: transform 0.2s; }
-        .game-card:hover { transform: scale(1.02); }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="terminal.css" rel="stylesheet">
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body class="p-4">
 
-    <div class="container mx-auto px-4 py-12">
-        <header class="text-center mb-12">
-            <a href="index.html" class="text-gray-500 hover:text-white mb-4 inline-block">&larr; Back to Home</a>
-            <h1 class="text-4xl font-bold text-white">Games & Projects</h1>
-            <p class="mt-2 text-lg text-gray-400">A collection of commercial work, jams, and technical demos.</p>
+    <div class="container mx-auto max-w-5xl py-12">
+        
+        <header class="mb-12 border-b-2 border-dashed border-gray-600 pb-8">
+            <div class="mb-4">
+                <a href="index.html" class="text-cyan-500 hover:text-white inline-block font-bold">
+                    &lt; /home/
+                </a>
+            </div>
+            <h1 class="text-4xl font-bold text-white mb-2">/GAMES_AND_PROJECTS</h1>
+            <p class="text-lg text-gray-400 font-mono">
+                > ls /portfolio/commercial_and_jams/
+            </p>
         </header>
 
-        <div class="max-w-5xl mx-auto space-y-8">
+        <div class="space-y-12">
             
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 flex flex-col md:flex-row game-card">
-                <div class="md:w-1/3 bg-gray-700 flex items-center justify-center p-8">
-                    <svg class="w-20 h-20 text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"></path></svg>
+            <div class="tui-window flex flex-col md:flex-row">
+                <div class="tui-title">NEON_RACER.EXE</div>
+
+                <div class="md:w-1/3 border-b md:border-b-0 md:border-r border-gray-600 flex items-center justify-center p-8 bg-black">
+                    <svg class="w-20 h-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
                 </div>
+
                 <div class="p-6 md:w-2/3">
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-2xl font-bold text-white">Neon Cyber-Racer</h3>
-                        <span class="px-2 py-1 bg-green-900 text-green-300 text-xs rounded border border-green-700">Released</span>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-green-400">Neon Cyber-Racer</h3>
+                        <span class="text-green-500 font-bold border border-green-500 px-2 py-0.5 text-xs">
+                            [STATUS: RELEASED]
+                        </span>
                     </div>
-                    <p class="mt-2 text-gray-400">A high-speed procedural racing game featuring custom physics for vehicle handling and dynamic shader-based environments.</p>
                     
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded">Unity</span>
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded">C#</span>
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded">HLSL</span>
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded">Photon Networking</span>
+                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4">
+                        A high-speed procedural racing game featuring custom physics for vehicle handling and dynamic shader-based environments.
+                    </p>
+                    
+                    <div class="mb-6">
+                        <div class="text-gray-500 text-xs mb-2 uppercase">Dependencies:</div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="text-cyan-400">[Unity]</span>
+                            <span class="text-cyan-400">[C#]</span>
+                            <span class="text-cyan-400">[HLSL_Shaders]</span>
+                            <span class="text-cyan-400">[Photon_Net]</span>
+                        </div>
                     </div>
 
-                    <div class="mt-6 flex space-x-4">
-                        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded font-medium transition">Play Demo</button>
-                        <button class="text-indigo-400 hover:text-white px-4 py-2 font-medium transition">View Code</button>
+                    <div class="flex space-x-4">
+                        <button class="tui-btn">EXECUTE_DEMO</button>
+                        <button class="tui-btn">VIEW_SOURCE</button>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-gray-800 rounded-xl overflow-hidden shadow-lg border border-gray-700 flex flex-col md:flex-row game-card">
-                <div class="md:w-1/3 bg-gray-700 flex items-center justify-center p-8">
-                     <svg class="w-20 h-20 text-gray-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg>
+            <div class="tui-window flex flex-col md:flex-row">
+                <div class="tui-title">ENGINE_CORE_V1.CPP</div>
+
+                <div class="md:w-1/3 border-b md:border-b-0 md:border-r border-gray-600 flex items-center justify-center p-8 bg-black">
+                    <svg class="w-20 h-20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/>
+                    </svg>
                 </div>
+
                 <div class="p-6 md:w-2/3">
-                    <div class="flex justify-between items-start">
-                        <h3 class="text-2xl font-bold text-white">Dungeon Crawler Engine</h3>
-                        <span class="px-2 py-1 bg-yellow-900 text-yellow-300 text-xs rounded border border-yellow-700">Prototype</span>
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold text-green-400">Dungeon Crawler Engine</h3>
+                        <span class="text-yellow-500 font-bold border border-yellow-500 px-2 py-0.5 text-xs">
+                            [STATUS: PROTOTYPE]
+                        </span>
                     </div>
-                    <p class="mt-2 text-gray-400">A custom 2D game engine built from scratch in C++. Features a tilemap renderer, A* pathfinding, and an Entity Component System (ECS).</p>
                     
-                    <div class="mt-4 flex flex-wrap gap-2">
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded">C++ 17</span>
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded">SDL2</span>
-                        <span class="px-2 py-1 bg-gray-700 text-gray-300 text-xs rounded">Lua Scripting</span>
+                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4">
+                        Custom 2D game engine built from scratch. Features a tilemap renderer, A* pathfinding algos, and a custom Entity Component System (ECS).
+                    </p>
+                    
+                    <div class="mb-6">
+                        <div class="text-gray-500 text-xs mb-2 uppercase">Dependencies:</div>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="text-cyan-400">[C++_17]</span>
+                            <span class="text-cyan-400">[SDL2]</span>
+                            <span class="text-cyan-400">[Lua_Scripting]</span>
+                        </div>
                     </div>
 
-                    <div class="mt-6 flex space-x-4">
-                        <button class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded font-medium transition">View on GitHub</button>
+                    <div class="flex space-x-4">
+                        <button class="tui-btn">GIT_CLONE</button>
                     </div>
                 </div>
             </div>
