@@ -1,0 +1,55 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:146.0) Gecko/20100101 Firefox/146.0" version="29.2.7">
+  <diagram name="Página-1" id="ZetIBhM9tro8jHHz9RyY">
+    <mxGraphModel dx="1375" dy="787" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="zobZQk3CWOSOE66ci185-13" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="" vertex="1">
+          <mxGeometry height="200" width="360" x="40" y="400" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-10" parent="1" style="rounded=0;whiteSpace=wrap;html=1;" value="" vertex="1">
+          <mxGeometry height="360" width="280" x="840" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-4" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="" vertex="1">
+          <mxGeometry height="200" width="360" x="40" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-1" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Ideias de jogos e prototipos&lt;/h1&gt;" vertex="1">
+          <mxGeometry height="70" width="180" x="80" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-2" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Turn Based Third Person Battle System&lt;/h1&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;p&gt;A simple prototype to show a battle system like Final Fantasy&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="150" width="290" x="70" y="185" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-3" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Guild Quest&lt;/h1&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;p&gt;A simple browser game to show HTML5 skills&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="113" width="317" x="63" y="443.5" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="" vertex="1">
+          <mxGeometry height="40" width="40" x="880" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-6" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=0;fontFamily=Verdana;labelBackgroundColor=none;labelBorderColor=default;" value="&lt;div&gt;UNREAL ENGINE&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="60" x="940" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-8" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;fontSize=22;fontFamily=Verdana;" value="&lt;div&gt;Legenda&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="120" x="880" y="55" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-11" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="" vertex="1">
+          <mxGeometry height="40" width="40" x="880" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-12" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=0;fontFamily=Verdana;labelBackgroundColor=none;labelBorderColor=default;" value="HTML5" vertex="1">
+          <mxGeometry height="30" width="60" x="940" y="205" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-15" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="" vertex="1">
+          <mxGeometry height="40" width="40" x="880" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontStyle=0;fontFamily=Verdana;labelBackgroundColor=none;labelBorderColor=default;" value="LOVE2D" vertex="1">
+          <mxGeometry height="30" width="60" x="940" y="285" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-17" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" value="" vertex="1">
+          <mxGeometry height="200" width="360" x="40" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="zobZQk3CWOSOE66ci185-18" parent="1" style="text;html=1;whiteSpace=wrap;overflow=hidden;rounded=0;" value="&lt;h1 style=&quot;margin-top: 0px;&quot;&gt;Fall Ball&lt;/h1&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;p&gt;Falling ball game like the Wario Ware one&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="113" width="317" x="61.5" y="683.5" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

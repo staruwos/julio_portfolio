@@ -1,46 +1,141 @@
-/* terminal.css */
-@import url('https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200;1,200&display=swap');
+/* terminal.css - Complete Fedora/Linux Theme */
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap');
 
 :root {
-    --bg-color: #101010;
+    --bg-color: #0c0c0c;       /* Deep black for terminal bg */
     --term-black: #000000;
-    --term-white: #e0e0e0;
-    --term-green: #2ecc71; /* Success/Safe */
-    --term-cyan: #3498db;  /* Links/Info */
-    --term-yellow: #f1c40f; /* Warnings/Highlights */
-    --term-magenta: #9b59b6; /* Special */
-    --term-red: #e74c3c;
-    --border-color: #555;
+    --term-white: #e0e0e0;     /* Standard text */
+    --term-green: #2ecc71;     /* Success/Safe/CRT */
+    --term-cyan: #3498db;      /* Links/Info */
+    --term-yellow: #f1c40f;    /* Warnings */
+    --term-magenta: #9b59b6;   /* Special */
+    --term-red: #e74c3c;       /* Errors/Close */
+    --border-color: #444;      /* Subtle borders */
+    --header-bg: #1e1e1e;      /* Window title bar */
 }
 
+/* --- 1. Desktop Environment (Background) --- */
 body {
-    background-color: var(--term-black);
-    color: var(--term-white);
-    font-family: 'Cascadia Code', 'DejaVu Sans Mono', 'Liberation Mono', monospace;
-    font-size: 16px;
+    background-color: #2f343f; /* Arch/Manjaro/Fedora dark grey */
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 30px 30px; /* Grid pattern */
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+    margin: 0;
+    font-family: 'Source Code Pro', 'DejaVu Sans Mono', monospace;
+    font-size: 15px;
     line-height: 1.4;
+    color: var(--term-white);
+    overflow: hidden; /* Prevent body scroll, use terminal scroll instead */
 }
 
-/* --- Global Typography & Layout --- */
-h1, h2, h3, h4 {
-    font-family: 'Cascadia Code', monospace; /* Retro pixel font for headers */
-    font-weight: 200;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+/* --- 2. The Linux Terminal Window Wrapper --- */
+.linux-terminal {
+    width: 100%;
+    max-width: 1200px;
+    height: 90vh;
+    max-height: 900px;
+    background-color: var(--bg-color);
+    border: 1px solid #3d3d3d;
+    box-shadow: 
+        0 0 0 1px #000, 
+        0 15px 35px rgba(0,0,0,0.6);
+    border-radius: 4px; /* Sharp corners for Linux feel */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
 }
 
-a { text-decoration: none; color: inherit; }
+/* --- 3. Window Header (KDE/Gnome Style) --- */
+.terminal-header {
+    background-color: var(--header-bg);
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #333;
+    flex-shrink: 0;
+    user-select: none;
+}
 
-/* --- TUI "Window" Container --- */
+/* Window Title */
+.terminal-title {
+    color: #cccccc;
+    font-size: 13px;
+    padding-left: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    display: flex;
+    align-items: center;
+}
+.terminal-title::before {
+    content: '>_'; 
+    margin-right: 8px;
+    color: var(--term-green);
+    font-weight: bold;
+}
+
+/* Window Controls (Right Aligned) */
+.terminal-controls {
+    display: flex;
+    height: 100%;
+}
+
+.control-btn {
+    width: 45px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #a0a0a0;
+    transition: background-color 0.15s, color 0.15s;
+    font-family: Arial, sans-serif; /* Sans-serif for crisp icons */
+    cursor: default;
+}
+
+/* Icons via CSS Content */
+.minimize::before { content: '−'; font-size: 18px; }
+.maximize::before { content: '□'; font-size: 14px; }
+.close::before    { content: '×'; font-size: 20px; }
+
+/* Hover States */
+.control-btn:hover { background-color: #3a3a3a; color: #fff; }
+.close:hover { background-color: #c0392b; color: #fff; }
+
+/* --- 4. Scrollable Content Area --- */
+.terminal-body {
+    flex-grow: 1;
+    overflow-y: auto;
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: #555 #1a1a1a;
+}
+
+/* Custom Scrollbar */
+.terminal-body::-webkit-scrollbar { width: 12px; }
+.terminal-body::-webkit-scrollbar-track { background: #1a1a1a; }
+.terminal-body::-webkit-scrollbar-thumb { 
+    background-color: #444; 
+    border: 3px solid #1a1a1a; 
+    border-radius: 2px;
+}
+.terminal-body::-webkit-scrollbar-thumb:hover { background-color: #666; }
+
+/* --- 5. TUI Component: "Window" Cards --- */
 .tui-window {
     border: 2px solid var(--term-white);
     background-color: var(--bg-color);
     position: relative;
-    box-shadow: 8px 8px 0px rgba(50,50,50,0.5); /* Hard shadow */
+    box-shadow: 8px 8px 0px rgba(40,40,40,0.5); /* Hard block shadow */
     margin-bottom: 2rem;
 }
 
-/* The Title Bar effect like in NCURSES */
 .tui-title {
     background-color: var(--term-white);
     color: var(--term-black);
@@ -51,18 +146,20 @@ a { text-decoration: none; color: inherit; }
     top: -14px;
     left: 10px;
     text-transform: uppercase;
+    font-family: 'Source Code Pro', monospace;
 }
 
-/* --- Buttons --- */
+/* --- 6. TUI Component: Buttons --- */
 .tui-btn {
     display: inline-block;
     border: 1px solid var(--term-cyan);
     color: var(--term-cyan);
     padding: 4px 12px;
     font-weight: bold;
-    transition: all 0.0s; /* Instant transition for retro feel */
+    transition: none; /* Instant for retro feel */
     cursor: pointer;
     background: transparent;
+    text-transform: uppercase;
 }
 .tui-btn::before { content: '['; margin-right: 5px; color: var(--term-white); }
 .tui-btn::after { content: ']'; margin-left: 5px; color: var(--term-white); }
@@ -70,25 +167,43 @@ a { text-decoration: none; color: inherit; }
 .tui-btn:hover {
     background-color: var(--term-cyan);
     color: var(--term-black);
-    border-color: var(--term-cyan);
 }
 .tui-btn:hover::before, .tui-btn:hover::after { color: var(--term-black); }
 
-/* --- Progress/Skill Bars (The htop look) --- */
+/* --- 7. TUI Component: Progress/Skill Bars --- */
 .tui-progress-bar {
-    background-color: #333;
+    background-color: #222;
     color: var(--term-green);
     font-family: monospace;
     font-weight: bold;
     letter-spacing: -2px; /* Squash pipes together */
     overflow: hidden;
     white-space: nowrap;
+    height: 100%;
+    display: block;
 }
 .tui-progress-bar::before {
     content: '||||||||||||||||||||||||||||||||||||||||||||||||||';
 }
 
-/* --- SVG Wiring (Vector Display Look) --- */
+/* --- 8. TUI Component: Timeline Tree --- */
+.tui-timeline-item {
+    border-left: 2px dashed var(--border-color);
+    padding-left: 20px;
+    margin-left: 10px;
+    position: relative;
+    padding-bottom: 30px;
+}
+
+/* --- 9. Global Typography & Elements --- */
+h1, h2, h3, h4 {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* SVG Styling for Vector Display Look */
 svg {
     filter: drop-shadow(0 0 2px var(--term-green));
 }
@@ -99,40 +214,29 @@ svg line, svg rect, svg path, svg polygon, svg circle {
 }
 svg text {
     fill: var(--term-green) !important;
-    font-family: 'VT323', monospace !important;
-    font-size: 18px !important;
+    font-family: 'Source Code Pro', monospace !important;
+    font-size: 14px !important;
 }
 
-/* --- Timeline Tree --- */
-.tui-timeline-item {
-    border-left: 2px dashed var(--border-color);
-    padding-left: 20px;
-    margin-left: 10px;
-    position: relative;
-    padding-bottom: 30px;
-}
-.tui-timeline-marker {
-    position: absolute;
-    left: -7px;
-    top: 0;
-    background: var(--term-black);
-    color: var(--term-cyan);
-    font-weight: bold;
-}
-
-/* --- Footer Keys --- */
+/* --- 10. Status Bar --- */
 .status-bar {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
-    background-color: var(--term-white);
-    color: var(--term-black);
-    padding: 5px;
+    background-color: var(--header-bg);
+    border-top: 1px solid #333;
+    color: #aaa;
+    padding: 5px 15px;
     display: flex;
     gap: 20px;
-    font-family: 'Fira Code', monospace;
-    font-size: 14px;
+    font-size: 13px;
     z-index: 50;
 }
-.key-hint span { background-color: var(--term-black); color: var(--term-white); padding: 0 4px; margin-right: 4px; }
+.key-hint span { 
+    background-color: #444; 
+    color: #fff; 
+    padding: 0 5px; 
+    margin-right: 5px; 
+    border-radius: 2px;
+}

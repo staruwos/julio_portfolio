@@ -7,73 +7,97 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="terminal.css" rel="stylesheet">
 </head>
-<body class="p-6 mb-12">
+<body>
 
-    <div class="container mx-auto max-w-5xl">
+    <div class="linux-terminal relative flex flex-col">
         
-        <header class="mb-16 border-b-2 border-dashed border-gray-600 pb-8 text-center">
-            <h1 class="text-6xl text-green-500 mb-2">JULIO_TRASFERETTI_NICOLUCCI</h1>
-            <div class="text-xl text-cyan-400 font-mono p-2">
-                <span class="text-gray-500">ROLE:</span> GAME_PROGRAMMER 
-                <span class="mx-4">|</span> 
-                <span class="text-gray-500">STATUS:</span> <span class="animate-pulse text-green-400">ONLINE</span>
+        <div class="terminal-header">
+            <div class="terminal-title">guest@portfolio: ~</div>
+            <div class="terminal-controls">
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+                <div class="control-btn close"></div>
             </div>
-            
-        </header>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 p-20">
-
-            <a href="games.html" class="block group">
-                <div class="tui-window p-6 h-full hover:border-green-500 transition-colors">
-                    <div class="tui-title">GAMES</div>
-                    <div class="mt-4 text-green-500 mb-4">
-                    </div>
-                    <h2 class="text-2xl font-bold text-white mb-2">> GAMES_LIB</h2>
-                    <p class="text-gray-400 text-sm font-mono">
-                        [DIR] Shipped Titles<br>
-                        [DIR] Game Jams<br>
-                        [DIR] Prototypes
-                    </p>
-                </div>
-            </a>
-
-            <a href="architecture.html" class="block group">
-                <div class="tui-window p-6 h-full hover:border-purple-500 transition-colors">
-                    <div class="tui-title">SYSTEMS</div>
-                    <div class="mt-4 text-purple-500 mb-4">
-                    </div>
-                    <h2 class="text-2xl font-bold text-white mb-2">> SYSTEMS</h2>
-                    <p class="text-gray-400 text-sm font-mono">
-                        > ECS_Impl.cpp<br>
-                        > Net_Sync.h<br>
-                        > AI_Trees.json
-                    </p>
-                </div>
-            </a>
-
-            <a href="experience.html" class="block group">
-                <div class="tui-window p-6 h-full hover:border-yellow-500 transition-colors">
-                    <div class="tui-title">USER_DATA</div>
-                    <div class="mt-4 text-yellow-500 mb-4">
-                    </div>
-                    <h2 class="text-2xl font-bold text-white mb-2">> SKILLS_EXP</h2>
-                    <p class="text-gray-400 text-sm font-mono">
-                        > Work_History<br>
-                        > Education<br>
-                        > Tech_Stack
-                    </p>
-                </div>
-            </a>
-
         </div>
-    </div>
 
-    <div class="status-bar">
-        <div class="key-hint"><span>F1</span>Help</div>
-        <div class="key-hint"><span>F5</span>Refresh</div>
-        <div class="key-hint"><span>F10</span>Exit</div>
-        <div class="key-hint ml-auto">MEM: 64K OK</div>
-    </div>
+        <div class="terminal-body flex-1 p-8 pb-16">
+            
+            <div class="container mx-auto max-w-5xl">
+                
+                <header class="mb-16 border-b-2 border-dashed border-gray-600 pb-8 text-center">
+                    <h1 class="text-6xl text-green-500 mb-2">JULIO_TRASFERETTI_NICOLUCCI</h1>
+                    <div class="text-xl text-cyan-400 font-mono p-2">
+                        <span class="text-gray-500">ROLE:</span> GAME_PROGRAMMER 
+                        <span class="mx-4">|</span> 
+                        <span class="text-gray-500">STATUS:</span> <span class="animate-pulse text-green-400">ONLINE</span>
+                    </div>
+                    <div class="mt-8 text-gray-600 select-none hidden md:block font-mono text-sm">
+                        ================================================================================
+                    </div>
+                </header>
 
-</body>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                    <a href="games.html" class="block group">
+                        <div class="tui-window p-6 h-full hover:border-green-500 transition-colors">
+                            <div class="tui-title">GAMES</div>
+                            
+                            <div class="mt-4 text-green-500 mb-4 font-mono text-center">
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-white mb-2">> GAMES_LIB</h2>
+                            <p class="text-gray-400 text-sm font-mono">
+                                [DIR] Shipped Titles<br>
+                                [DIR] Game Jams<br>
+                                [DIR] Prototypes
+                            </p>
+
+                        </div>
+                    </a>
+
+                    <a href="systems.html" class="block group">
+                        <div class="tui-window p-6 h-full hover:border-purple-500 transition-colors">
+                            <div class="tui-title">SYSTEMS</div>
+                            
+                            <div class="mt-4 text-purple-500 mb-4 font-mono text-center">
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-white mb-2">> SYSTEMS</h2>
+                            <p class="text-gray-400 text-sm font-mono">
+                                > ECS_Impl.cpp<br>
+                                > Net_Sync.h<br>
+                                > AI_Trees.json
+                            </p>
+
+                        </div>
+                    </a>
+
+                    <a href="experience.html" class="block group">
+                        <div class="tui-window p-6 h-full hover:border-yellow-500 transition-colors">
+                            <div class="tui-title">USER_DATA</div>
+                            
+                            <div class="mt-4 text-yellow-500 mb-4 font-mono text-center">
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-white mb-2">> SKILLS_EXP</h2>
+                            <p class="text-gray-400 text-sm font-mono">
+                                > Work_History<br>
+                                > Education<br>
+                                > Tech_Stack
+                            </p>
+
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+
+        </div> <div class="status-bar">
+            <div class="key-hint"><span>F1</span>Help</div>
+            <div class="key-hint"><span>F5</span>Refresh</div>
+            <div class="key-hint"><span>F10</span>Exit</div>
+            <div class="key-hint ml-auto">MEM: 64K OK</div>
+        </div>
+
+    </div> </body>
 </html>
