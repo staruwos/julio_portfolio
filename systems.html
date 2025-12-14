@@ -23,31 +23,28 @@
 
         <div class="terminal-body flex-1 p-8 pb-16">
 
-            <header class="mb-12 border-b-2 border-dashed border-gray-600 pb-8">
+            <header class="mb-8 md:mb-12 border-b-2 border-dashed border-gray-600 pb-8">
                 <div class="mb-4">
                     <a href="index.html" class="text-cyan-500 hover:text-white inline-block font-bold">
                         &lt; /home/
                     </a>
                 </div>
-                <h1 class="text-4xl font-bold text-white mb-2">/SYSTEM_ARCHITECTURE</h1>
-                <p class="text-lg text-gray-400 font-mono">
-                    > grep -r "TODO" ./src/core_systems/
-                </p>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">/SYSTEMS</h1>
             </header>
 
             <div class="space-y-12">
 
-                <div class="tui-window p-6">
+                <div class="tui-window p-4 md:p-6">
                     <div class="tui-title">AI_FSM_DIAGRAM.SVG</div>
                     
-                    <h2 class="text-2xl font-bold text-green-400 mb-2">> ENEMY_AI_CONTROLLER</h2>
-                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl">
+                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> ENEMY_AI_CONTROLLER</h2>
+                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
                         // Decoupled AI system managed by a central Controller.<br>
                         // States (Patrol, Chase, Attack) are separate classes.
                     </p>
 
-                    <div class="bg-black border border-gray-800 p-4 overflow-x-auto">
-                        <svg width="650" height="200" viewBox="0 0 650 200" xmlns="http://www.w3.org/2000/svg">
+                    <div class="bg-black border border-gray-800 p-2 md:p-4 overflow-hidden">
+                        <svg class="w-full h-auto" viewBox="0 0 650 200" xmlns="http://www.w3.org/2000/svg">
                             <rect x="10" y="10" width="240" height="150" rx="0"/> 
                             <text x="20" y="35" font-weight="bold">EnemyController (Context)</text>
                             <line x1="10" y1="45" x2="250" y2="45"/>
@@ -74,17 +71,17 @@
                     </div>
                 </div>
 
-                <div class="tui-window p-6">
+                <div class="tui-window p-4 md:p-6">
                     <div class="tui-title">NET_INVENTORY_SEQ.SVG</div>
 
-                    <h2 class="text-2xl font-bold text-green-400 mb-2">> NETWORKING_LOGIC</h2>
-                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl">
+                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> NETWORKING_LOGIC</h2>
+                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
                         // Sequence diagram for server-authoritative item pickup.<br>
                         // Prevents client-side state manipulation cheating.
                     </p>
 
-                    <div class="bg-black border border-gray-800 p-4 overflow-x-auto">
-                        <svg width="600" height="350" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+                    <div class="bg-black border border-gray-800 p-2 md:p-4 overflow-hidden">
+                        <svg class="w-full h-auto" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
                             <text x="30" y="30" font-weight="bold">Player</text>
                             <line x1="50" y1="40" x2="50" y2="330" stroke-dasharray="4"/>
 
@@ -120,11 +117,14 @@
                 </div>
 
             </div>
-        </div> <div class="status-bar">
+        </div> 
+        
+        <div class="status-bar">
             <div class="key-hint"><span>F1</span>Docs</div>
             <div class="key-hint"><span>F3</span>Search</div>
             <div class="key-hint ml-auto">MODE: READ-ONLY</div>
         </div>
 
-    </div> </body>
+    </div> 
+</body>
 </html>

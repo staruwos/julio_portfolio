@@ -20,17 +20,16 @@
             </div>
         </div>
 
-        <div class="terminal-body flex-1 p-8 pb-16">
+        <div class="terminal-body flex-1 p-4 md:p-8 pb-16">
             
-            <header class="mb-12 border-b-2 border-dashed border-gray-600 pb-8">
+            <header class="mb-8 md:mb-12 border-b-2 border-dashed border-gray-600 pb-8">
                 <div class="mb-4">
                     <a href="index.html" class="text-cyan-500 hover:text-white inline-block font-bold">
                         &lt; /home/
                     </a>
                 </div>
-                <h1 class="text-4xl font-bold text-white mb-2">/GAMES_AND_PROJECTS</h1>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">/GAMES</h1>
                 <p class="text-lg text-gray-400 font-mono">
-                    > ls -la ./shipped_titles/
                 </p>
             </header>
 
@@ -45,15 +44,15 @@
                         </svg>
                     </div>
 
-                    <div class="p-6 md:w-2/3">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-2xl font-bold text-green-400">Turn Based Battle System</h3>
-                            <span class="text-yellow-500 font-bold border border-yellow-500 px-2 py-0.5 text-xs">
+                    <div class="p-4 md:p-6 md:w-2/3">
+                        <div class="flex flex-col md:flex-row justify-between items-start mb-4 gap-2">
+                            <h3 class="text-xl md:text-2xl font-bold text-green-400">Turn Based Battle System</h3>
+                            <span class="text-yellow-500 font-bold border border-yellow-500 px-2 py-0.5 text-xs whitespace-nowrap">
                                 [STATUS: PROTOTYPE]
                             </span>
                         </div>
                         
-                        <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4">
+                        <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 text-sm md:text-base">
                             A Battle System for Turn Based RPG games. Inspired by Final Fantasy, Dragon Quest and many others.
                         </p>
                         
@@ -66,9 +65,9 @@
                             </div>
                         </div>
 
-                        <div class="flex space-x-4">
-                            <button class="tui-btn">DOWNLOAD_DEMO</button>
-                            <button class="tui-btn">VIEW_SOURCE</button>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <button class="tui-btn w-full md:w-auto justify-center">DOWNLOAD_DEMO</button>
+                            <button class="tui-btn w-full md:w-auto justify-center">VIEW_SOURCE</button>
                         </div>
                     </div>
                 </div>
@@ -82,15 +81,15 @@
                         </svg>
                     </div>
 
-                    <div class="p-6 md:w-2/3">
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="text-2xl font-bold text-green-400">Web Based RPG Game</h3>
-                            <span class="text-green-500 font-bold border border-green-500 px-2 py-0.5 text-xs">
+                    <div class="p-4 md:p-6 md:w-2/3">
+                        <div class="flex flex-col md:flex-row justify-between items-start mb-4 gap-2">
+                            <h3 class="text-xl md:text-2xl font-bold text-green-400">Web Based RPG Game</h3>
+                            <span class="text-green-500 font-bold border border-green-500 px-2 py-0.5 text-xs whitespace-nowrap">
                                 [STATUS: RELEASED]
                             </span>
                         </div>
                         
-                        <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4">
+                        <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 text-sm md:text-base">
                             Custom 2D game engine built from scratch. Features a tilemap renderer, A* pathfinding algos, and a custom Entity Component System (ECS).
                         </p>
                         
@@ -103,15 +102,17 @@
                             </div>
                         </div>
 
-                        <div class="flex space-x-4">
-                            <button class="tui-btn">PLAY</button>
-                            <button class="tui-btn">VIEW_SOURCE</button>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <button class="tui-btn w-full md:w-auto justify-center">PLAY</button>
+                            <button class="tui-btn w-full md:w-auto justify-center">VIEW_SOURCE</button>
                         </div>
                     </div>
                 </div>
 
             </div>
-        </div> <div class="status-bar">
+        </div> 
+        
+        <div class="status-bar hidden md:flex">
             <div class="key-hint"><span>F1</span>Help</div>
             <div class="key-hint"><span>F5</span>Refresh</div>
             <div class="key-hint ml-auto">TOTAL: 2 FILES</div>
