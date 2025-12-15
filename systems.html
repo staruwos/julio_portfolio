@@ -116,6 +116,39 @@
                     </div>
                 </div>
 
+                <div class="tui-window p-4 md:p-6">
+                    <div class="tui-title">BLASTCOMP_CONTAINER</div>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> BLASTCOMP_TOOLCHAIN</h2>
+                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
+                        // Docker container for M68K cross-compilation.<br>
+                        // Easily build binaries for SEGA Genesis / Mega Drive.
+                    </p>
+
+                    <div class="bg-black border border-gray-800 p-4 font-mono text-xs md:text-sm overflow-x-auto">
+                        <div class="text-gray-500 mb-2"># Build Process Visualization</div>
+                        <div class="flex flex-col md:flex-row gap-2 mb-2 font-bold">
+                            <div>
+                                <span class="text-blue-500">[HOST]</span>
+                                <span class="text-gray-400">make build</span>
+                            </div>
+                            <span class="text-gray-600 hidden md:inline">-></span>
+                            <div>
+                                <span class="text-yellow-500">[CONTAINER]</span>
+                                <span class="text-gray-400">m68k-gcc main.c -o rom.bin</span>
+                            </div>
+                        </div>
+                        <div class="h-px bg-gray-800 my-3"></div>
+                        <div class="text-green-400">>> BUILD SUCCESSFUL: rom.bin (Genesis) generated.</div>
+                    </div>
+
+                    <div class="mt-6">
+                         <a href="https://github.com/staruwos/blastcomp" target="_blank" class="inline-block w-full md:w-auto">
+                            <button class="tui-btn w-full md:w-auto justify-center">VIEW_ON_GITHUB</button>
+                        </a>
+                    </div>
+                </div>
+
             </div>
         </div> 
         
