@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JULIO_TRASFERETTI_NICOLUCCI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="terminal.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="linux-terminal relative flex flex-col">
+        
+        <div class="terminal-header">
+            <div class="terminal-title">guest@portfolio: ~/systems</div>
+            <div class="terminal-controls">
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+                <div class="control-btn close"></div>
+            </div>
+        </div>
+
+        <div class="terminal-body flex-1 p-8 pb-16">
+
+            <header class="mb-8 md:mb-12 border-b-2 border-dashed border-gray-600 pb-8">
+                <div class="mb-4">
+                    <a href="index.html" class="text-cyan-500 hover:text-white inline-block font-bold">
+                        &lt; /home/
+                    </a>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">/SYSTEMS</h1>
+            </header>
+
+            <div class="space-y-12">
+
+                <div class="tui-window p-4 md:p-6">
+                    <div class="tui-title">BLASTCOMP_CONTAINER</div>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> BLASTCOMP_TOOLCHAIN</h2>
+                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
+                        // Docker container for M68K cross-compilation.<br>
+                        // Easily build binaries for SEGA Genesis / Mega Drive.
+                    </p>
+
+                    <div class="bg-black border border-gray-800 p-4 font-mono text-xs md:text-sm overflow-x-auto">
+                        <div class="text-gray-500 mb-2"># Build Process Visualization</div>
+                        <div class="flex flex-col md:flex-row gap-2 mb-2 font-bold">
+                            <div>
+                                <span class="text-blue-500">[HOST]</span>
+                                <span class="text-gray-400">make build</span>
+                            </div>
+                            <span class="text-gray-600 hidden md:inline">-></span>
+                            <div>
+                                <span class="text-yellow-500">[CONTAINER]</span>
+                                <span class="text-gray-400">m68k-gcc main.c -o rom.bin</span>
+                            </div>
+                        </div>
+                        <div class="h-px bg-gray-800 my-3"></div>
+                        <div class="text-green-400">>> BUILD SUCCESSFUL: rom.bin (Genesis) generated.</div>
+                    </div>
+
+                    <div class="mt-6">
+                         <a href="https://github.com/staruwos/blastcomp" target="_blank" class="inline-block w-full md:w-auto">
+                            <button class="tui-btn w-full md:w-auto justify-center">VIEW_ON_GITHUB</button>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="tui-window p-4 md:p-6">
+                    <div class="tui-title">AI_FSM_DIAGRAM.SVG</div>
+                    
+                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> ENEMY_AI_CONTROLLER</h2>
+                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
+                        // Decoupled AI system managed by a central Controller.<br>
+                        // States (Patrol, Chase, Attack) are separate classes.
+                    </p>
+
+                    <div class="bg-black border border-gray-800 p-2 md:p-4 overflow-hidden">
+                        <svg class="w-full h-auto" viewBox="0 0 650 200" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="10" y="10" width="240" height="150" rx="0"/> 
+                            <text x="20" y="35" font-weight="bold">EnemyController (Context)</text>
+                            <line x1="10" y1="45" x2="250" y2="45"/>
+                            
+                            <text x="20" y="70">- currentState: IState*</text>
+                            <text x="20" y="90">- navMeshAgent: NavAgent</text>
+                            <line x1="10" y1="105" x2="250" y2="105"/>
+                            <text x="20" y="130">+ ChangeState(newState)</text>
+
+                            <rect x="410" y="10" width="220" height="150" rx="0"/>
+                            <text x="420" y="35" font-weight="bold">Abstract State</text>
+                            <line x1="410" y1="45" x2="630" y2="45"/>
+                            <text x="420" y="70">+ Enter() / Exit()</text>
+                            <text x="420" y="90">+ Tick()</text>
+                            <text x="420" y="110">+ PhysicsTick()</text>
+                            
+                            <line x1="250" y1="85" x2="410" y2="85" stroke-dasharray="4"/>
+                            <text x="320" y="75" font-size="10">OWNS</text>
+                        </svg>
+                    </div>
+                    
+                    <div class="mt-4 text-right">
+                        <span class="text-gray-500 text-xs">fig 1.0 - Finite State Machine Pattern</span>
+                    </div>
+                </div>
+
+                <div class="tui-window p-4 md:p-6">
+                    <div class="tui-title">NET_INVENTORY_SEQ.SVG</div>
+
+                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> NETWORKING_LOGIC</h2>
+                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
+                        // Sequence diagram for server-authoritative item pickup.<br>
+                        // Prevents client-side state manipulation cheating.
+                    </p>
+
+                    <div class="bg-black border border-gray-800 p-2 md:p-4 overflow-hidden">
+                        <svg class="w-full h-auto" viewBox="0 0 600 350" xmlns="http://www.w3.org/2000/svg">
+                            <text x="30" y="30" font-weight="bold">Player</text>
+                            <line x1="50" y1="40" x2="50" y2="330" stroke-dasharray="4"/>
+
+                            <text x="130" y="30" font-weight="bold">ItemObj</text>
+                            <line x1="160" y1="40" x2="160" y2="330" stroke-dasharray="4"/>
+                            
+                            <text x="280" y="30" font-weight="bold">Inv_Mgr</text>
+                            <line x1="310" y1="40" x2="310" y2="330" stroke-dasharray="4"/>
+
+                            <text x="460" y="30" font-weight="bold">Server</text>
+                            <line x1="490" y1="40" x2="490" y2="330" stroke-dasharray="4"/>
+
+                            <line x1="50" y1="80" x2="160" y2="80" marker-end="url(#arrow)"/>
+                            <text x="60" y="70">1. Interact(E)</text>
+
+                            <line x1="160" y1="130" x2="310" y2="130" marker-end="url(#arrow)"/>
+                            <text x="170" y="120">2. ReqPickup()</text>
+
+                            <line x1="310" y1="180" x2="490" y2="180" marker-end="url(#arrow)"/>
+                            <text x="320" y="170">3. Validate()</text>
+
+                            <line x1="490" y1="230" x2="310" y2="230" stroke-dasharray="4"/>
+                            <text x="340" y="220">4. OK (200)</text>
+
+                             <line x1="310" y1="280" x2="50" y2="280" stroke-dasharray="4"/>
+                            <text x="100" y="270">5. Update UI</text>
+                        </svg>
+                    </div>
+
+                    <div class="mt-4 text-right">
+                        <span class="text-gray-500 text-xs">fig 1.1 - Authoritative Server Flow</span>
+                    </div>
+                </div>
+
+                
+
+            </div>
+        </div> 
+        
+        <div class="status-bar">
+            <div class="key-hint"><span>F1</span>Docs</div>
+            <div class="key-hint"><span>F3</span>Search</div>
+            <div class="key-hint ml-auto">MODE: READ-ONLY</div>
+        </div>
+
+    </div> 
+</body>
+</html>
