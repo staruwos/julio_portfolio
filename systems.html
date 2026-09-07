@@ -3,8 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Julio Trasferetti Nicolucci Portfolio.">
-    <title>JULIO TRASFERETTI NICOLUCCI</title>
+    <meta name="description" content="Systems and software engineering projects by Julio Nicolucci, covering C++, embedded Linux, Docker, MQTT, Qt, cross-compilation, and developer tools.">
+    <link rel="canonical" href="https://julionico.online/systems.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://julionico.online/systems.html">
+    <meta property="og:title" content="Systems and Software Projects | Julio Nicolucci">
+    <meta property="og:description" content="C++, embedded Linux, Docker, MQTT, Qt, cross-compilation, and developer tools from Julio Nicolucci.">
+    <meta property="og:site_name" content="Julio Nicolucci Portfolio">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Systems and Software Projects | Julio Nicolucci">
+    <meta name="twitter:description" content="C++, embedded Linux, Docker, MQTT, Qt, cross-compilation, and developer tools.">
+    <meta name="theme-color" content="#050505">
+    <title>Systems and Software Projects | Julio Nicolucci</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="terminal.css" rel="stylesheet">
@@ -17,6 +27,7 @@
     "alternateName": "Julio Nicolucci",
     "url": "https://julionico.online",
     "jobTitle": "Software Engineer & Game Developer",
+    "description": "Software engineer and game developer specializing in C++, Unreal Engine, embedded systems, and interactive software.",
     "knowsAbout": ["Unreal Engine", "C++", "Java", "Embedded Systems", "Computer Science", "Godot"],
     "sameAs": [
         "https://github.com/staruwos",
@@ -30,7 +41,7 @@
     <div class="linux-terminal relative flex flex-col">
         
         <div class="terminal-header">
-            <div class="terminal-title">guest@portfolio: ~/systems</div>
+            <div class="terminal-title" id="term-title">guest@portfolio: ~/systems</div>
             <div class="terminal-controls">
                 <div class="control-btn minimize"></div>
                 <div class="control-btn maximize"></div>
@@ -43,221 +54,280 @@
             <header class="mb-8 md:mb-12 border-b-2 border-dashed border-gray-600 pb-8">
                 <div class="mb-4">
                     <a href="index.html" class="text-cyan-500 hover:text-white inline-block font-bold">
-                        &lt; /home/
+                        &lt; cd /home
                     </a>
                 </div>
-                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">/SYSTEMS</h1>
+                <h1 class="text-3xl md:text-4xl font-bold text-white mb-2" id="header-title">/SYSTEMS</h1>
             </header>
 
-            <div class="space-y-12">
-
-                <div class="tui-window p-4 md:p-6">
-                    <div class="tui-title">BLASTCOMP_CONTAINER</div>
-
-                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> BLASTCOMP_TOOLCHAIN</h2>
-                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
-                        // Docker container for M68K cross-compilation.<br>
-                        // Easily build binaries for SEGA Genesis / Mega Drive.
-                    </p>
-
-                    <div class="bg-black border border-gray-800 p-4 font-mono text-xs md:text-sm overflow-x-auto">
-                        <div class="text-gray-500 mb-2"># Build Process Visualization</div>
-                        <div class="flex flex-col md:flex-row gap-2 mb-2 font-bold">
-                            <div>
-                                <span class="text-blue-500">[HOST]</span>
-                                <span class="text-gray-400">make build</span>
-                            </div>
-                            <span class="text-gray-600 hidden md:inline">-></span>
-                            <div>
-                                <span class="text-yellow-500">[CONTAINER]</span>
-                                <span class="text-gray-400">m68k-gcc main.c -o rom.bin</span>
-                            </div>
-                        </div>
-                        <div class="h-px bg-gray-800 my-3"></div>
-                        <div class="text-green-400">>> BUILD SUCCESSFUL: rom.bin (Genesis) generated.</div>
-                    </div>
-
-                    <div class="mt-6">
-                         <a href="https://github.com/staruwos/blastcomp" target="_blank" class="inline-block w-full md:w-auto">
-                            <button class="tui-btn w-full md:w-auto justify-center">VIEW_ON_GITHUB</button>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="tui-window p-4 md:p-6">
-                    <div class="tui-title">STRUCTVIZ</div>
-
-                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> C_STRUCT_MEMORY_VISUALIZER</h2>
-                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
-                        // Interactive client-side web app to visualize C struct padding and alignment.<br>
-                        // Parses C code recursively and calculates optimal layouts across LP64, LLP64, ILP32, and 8-bit cc65 architectures.
-                    </p>
-
-                    <div class="bg-black border border-gray-800 p-4 font-mono text-xs md:text-sm overflow-x-auto">
-                        <div class="text-gray-500 mb-2"># Memory Grid Analysis: struct { char a; double b; } (LP64)</div>
-                        <div class="flex flex-col gap-2 mb-2">
-                            <div class="flex items-center gap-2">
-                                <span class="text-blue-500 min-w-[48px]">[0x00]</span>
-                                <span class="bg-green-900 text-green-400 px-2 py-1 text-center w-8">a</span>
-                                <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
-                                <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
-                                <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
-                                <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
-                                <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
-                                <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
-                                <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
-                                <span class="text-gray-500 ml-4 hidden md:inline">// 7 bytes padding</span>
-                            </div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-blue-500 min-w-[48px]">[0x08]</span>
-                                <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
-                                <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
-                                <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
-                                <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
-                                <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
-                                <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
-                                <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
-                                <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
-                                <span class="text-gray-500 ml-4 hidden md:inline">// 8 bytes aligned</span>
-                            </div>
-                        </div>
-                        <div class="h-px bg-gray-800 my-3"></div>
-                        <div class="text-cyan-400">>> TOTAL SIZE: 16 bytes (Wasted space: 43%)</div>
-                    </div>
-
-                    <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                        <div class="font-mono text-xs text-gray-500">
-                            <span style="color: var(--term-green)">FRONTEND:</span> HTML5 · CSS3 · Vanilla JS<br>
-                            <span style="color: var(--term-green)">DEPLOYMENT:</span> GitHub Pages
-                        </div>
-                        <span class="text-gray-500 text-xs">fig 1.4 - Virtual Memory Hex Dump</span>
-                    </div>
-
-                    <div class="mt-6 flex flex-col md:flex-row gap-4">
-                         <a href="https://staruwos.github.io/structviz" target="_blank" class="inline-block w-full md:w-auto">
-                            <button class="tui-btn w-full md:w-auto justify-center">LIVE_DEMO</button>
-                        </a>
-                         <a href="https://github.com/staruwos/structviz" target="_blank" class="inline-block w-full md:w-auto">
-                            <button class="tui-btn w-full md:w-auto justify-center">VIEW_SOURCE</button>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="tui-window p-4 md:p-6">
-                    <div class="tui-title">BEEHIVE</div>
-
-                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> BEEHIVE_TELEMETRY_PIPELINE</h2>
-                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
-                        // Architecture: Distributed MQTT swarm bridging to Web.<br>
-                        // High-frequency telemetry ingestion via Python service.
-                    </p>
-
-                    <div class="bg-black border border-gray-800 p-2 md:p-4 overflow-hidden">
-                        <svg class="w-full h-auto" viewBox="0 0 650 220" xmlns="http://www.w3.org/2000/svg" style="background: #000;">
-                            <defs>
-                                <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                                    <path d="M0,0 L0,6 L9,3 z" fill="#666" />
-                                </marker>
-                            </defs>
-
-                            <rect x="20" y="30" width="100" height="40" rx="2" 
-                                style="stroke: var(--term-yellow) !important; fill: #000 !important; stroke-width: 2px;" />
-                            <text x="70" y="55" text-anchor="middle" 
-                                style="fill: var(--term-yellow) !important; font-size: 11px !important; font-weight: bold;">NODE_ALPHA</text>
-
-                            <rect x="20" y="90" width="100" height="40" rx="2" 
-                                style="stroke: var(--term-yellow) !important; fill: #000 !important; stroke-width: 2px;" />
-                            <text x="70" y="115" text-anchor="middle" 
-                                style="fill: var(--term-yellow) !important; font-size: 11px !important; font-weight: bold;">NODE_BETA</text>
-
-                            <rect x="20" y="150" width="100" height="40" rx="2" 
-                                style="stroke: var(--term-yellow) !important; fill: #000 !important; stroke-width: 2px;" />
-                            <text x="70" y="175" text-anchor="middle" 
-                                style="fill: var(--term-yellow) !important; font-size: 11px !important; font-weight: bold;">NODE_GAMMA</text>
-
-                            <path d="M120 50 L160 50 L160 110 L200 110" fill="none" stroke="#444" stroke-width="2" />
-                            <path d="M120 110 L200 110" fill="none" stroke="#444" stroke-width="2" />
-                            <path d="M120 170 L160 170 L160 110 L200 110" fill="none" stroke="#444" stroke-width="2" />
-
-                            <line x1="200" y1="110" x2="238" y2="110" stroke="#444" stroke-width="2" marker-end="url(#arrow-green)" style="stroke: #2ecc71  !important;" />
-
-
-                            <rect x="240" y="60" width="160" height="100" rx="2" 
-                                style="stroke: var(--term-green) !important; fill: #000 !important; stroke-width: 2px;" />
-                            
-                            <text x="320" y="90" text-anchor="middle" 
-                                style="fill: var(--term-green) !important; font-size: 14px !important; font-weight: bold;">PYTHON_BRIDGE</text>
-                            <text x="320" y="110" text-anchor="middle" 
-                                style="fill: var(--term-green) !important; font-size: 10px !important;">(mqtt broker)</text>
-                            <text x="320" y="130" text-anchor="middle" 
-                                style="fill: #666 !important; font-size: 10px !important;">Writes JSON IO</text>
-
-
-                            <line x1="400" y1="110" x2="448" y2="110" stroke="#444" stroke-width="2" marker-end="url(#arrow-green)" style="stroke: #2ecc71 !important;" />
-
-
-                            <rect x="450" y="40" width="140" height="140" rx="2" 
-                                style="stroke: var(--term-cyan) !important; fill: #000 !important; stroke-width: 2px;" />
-                            
-                            <text x="520" y="80" text-anchor="middle" 
-                                style="fill: var(--term-cyan) !important; font-size: 14px !important; font-weight: bold;">NGINX_WEB</text>
-                            <text x="520" y="105" text-anchor="middle" 
-                                style="fill: var(--term-cyan) !important; font-size: 10px !important;">(:80 /index.html)</text>
-                            
-                            <rect x="470" y="120" width="100" height="40" rx="1" 
-                                style="stroke: var(--term-cyan) !important; fill: #000 !important; stroke-dasharray: 4;" />
-                            <text x="520" y="145" text-anchor="middle" 
-                                style="fill: var(--term-cyan) !important; font-size: 9px !important;">VISUALIZER_UI</text>
-
-                        </svg>
-                    </div>
-
-                    <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                        <div class="font-mono text-xs text-gray-500">
-                            <span style="color: var(--term-green)">TARGET:</span> Raspberry Pi<br>
-                            <span style="color: var(--term-green)">STACK:</span> Yocto · Mosquitto · Python
-                        </div>
-                        <span class="text-gray-500 text-xs">fig 1.2 - Swarm Architecture</span>
-                    </div>
-                    <div class="mt-6">
-                         <a href="https://github.com/staruwos/meta-beehive" target="_blank" class="inline-block w-full md:w-auto">
-                            <button class="tui-btn w-full md:w-auto justify-center">VIEW_ON_GITHUB</button>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="tui-window p-4 md:p-6">
-                    <div class="tui-title">AUTO_PATCHER</div>
-
-                    <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> QT_FRAMELESS_LAUNCHER</h2>
-                    <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
-                        // Custom C++ game updater built with Qt.<br>
-                        // Features: Non-rectangular window masking, SHA-256 integrity verification, and zero-dependency ZIP extraction (Miniz).
-                    </p>
-
-                    <div class="bg-black border border-gray-800 p-2 overflow-hidden flex justify-center items-center">
-                        <img src="OLlELAM.jpg" alt="Custom Patcher UI" class="max-w-full h-auto max-h-64 object-contain border border-gray-800 opacity-90 hover:opacity-100 transition-opacity">
-                    </div>
-
-                    <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
-                        <div class="font-mono text-xs text-gray-500">
-                            <span style="color: var(--term-green)">CORE:</span> C++17 · Qt Widgets<br>
-                            <span style="color: var(--term-green)">NET:</span> QNetworkAccessManager · SSL
-                        </div>
-                        <span class="text-gray-500 text-xs">fig 1.3 - Custom Stylesheet Implementation</span>
-                    </div>
-
-                    <div class="mt-6">
-                        <a href="https://github.com/staruwos/AutoPatcher" target="_blank" class="inline-block w-full md:w-auto">
-                            <button class="tui-btn w-full md:w-auto justify-center">VIEW_SOURCE</button>
-                        </a>
-                    </div>
-                </div>
-
+            <!-- DIRECTORY LISTING VIEW -->
+            <div id="dir-view" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
+                <!-- Folder: Blastcomp -->
+                <div onclick="openProject('blastcomp')" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
+                    <div class="flex items-center gap-4 font-mono text-cyan-500 group-hover:text-cyan-400">
+                        <span class="text-3xl">📁</span>
+                        <span class="font-bold text-lg md:text-xl">blastcomp/</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-4 font-mono">// Docker container for M68K cross-compilation.</p>
+                </div>
+
+                <!-- Folder: Structviz -->
+                <div onclick="openProject('structviz')" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
+                    <div class="flex items-center gap-4 font-mono text-cyan-500 group-hover:text-cyan-400">
+                        <span class="text-3xl">📁</span>
+                        <span class="font-bold text-lg md:text-xl">structviz/</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-4 font-mono">// C struct padding and alignment visualizer.</p>
+                </div>
+
+                <!-- Folder: Beehive -->
+                <div onclick="openProject('beehive')" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
+                    <div class="flex items-center gap-4 font-mono text-cyan-500 group-hover:text-cyan-400">
+                        <span class="text-3xl">📁</span>
+                        <span class="font-bold text-lg md:text-xl">beehive/</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-4 font-mono">// Distributed MQTT swarm telemetry pipeline.</p>
+                </div>
+
+                <!-- Folder: Auto Patcher -->
+                <div onclick="openProject('autopatcher')" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
+                    <div class="flex items-center gap-4 font-mono text-cyan-500 group-hover:text-cyan-400">
+                        <span class="text-3xl">📁</span>
+                        <span class="font-bold text-lg md:text-xl">auto_patcher/</span>
+                    </div>
+                    <p class="text-gray-500 text-sm mt-4 font-mono">// Custom C++ game updater built with Qt.</p>
+                </div>
 
             </div>
-        </div> 
+
+            <!-- INDIVIDUAL PROJECT VIEW (Hidden by default) -->
+            <div id="project-view" class="hidden">
+                
+                <div class="mb-6">
+                    <button onclick="closeProject()" class="text-yellow-500 hover:text-white inline-block font-bold font-mono">
+                        $ cd ..
+                    </button>
+                </div>
+
+                <!-- Blastcomp Content -->
+                <div id="content-blastcomp" class="project-content hidden">
+                    <div class="tui-window p-4 md:p-6">
+                        <div class="tui-title">BLASTCOMP_CONTAINER</div>
+
+                        <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> BLASTCOMP_TOOLCHAIN</h2>
+                        <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
+                            // Docker container for M68K cross-compilation.<br>
+                            // Easily build binaries for SEGA Genesis / Mega Drive.
+                        </p>
+
+                        <div class="bg-black border border-gray-800 p-4 font-mono text-xs md:text-sm overflow-x-auto">
+                            <div class="text-gray-500 mb-2"># Build Process Visualization</div>
+                            <div class="flex flex-col md:flex-row gap-2 mb-2 font-bold">
+                                <div>
+                                    <span class="text-blue-500">[HOST]</span>
+                                    <span class="text-gray-400">make build</span>
+                                </div>
+                                <span class="text-gray-600 hidden md:inline">-></span>
+                                <div>
+                                    <span class="text-yellow-500">[CONTAINER]</span>
+                                    <span class="text-gray-400">m68k-gcc main.c -o rom.bin</span>
+                                </div>
+                            </div>
+                            <div class="h-px bg-gray-800 my-3"></div>
+                            <div class="text-green-400">>> BUILD SUCCESSFUL: rom.bin (Genesis) generated.</div>
+                        </div>
+
+                        <div class="mt-6">
+                            <a href="https://github.com/staruwos/blastcomp" target="_blank" class="inline-block w-full md:w-auto">
+                                <button class="tui-btn w-full md:w-auto justify-center">VIEW_ON_GITHUB</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Structviz Content -->
+                <div id="content-structviz" class="project-content hidden">
+                    <div class="tui-window p-4 md:p-6">
+                        <div class="tui-title">STRUCTVIZ</div>
+
+                        <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> C_STRUCT_MEMORY_VISUALIZER</h2>
+                        <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
+                            // Interactive client-side web app to visualize C struct padding and alignment.<br>
+                            // Parses C code recursively and calculates optimal layouts across LP64, LLP64, ILP32, and 8-bit cc65 architectures.
+                        </p>
+
+                        <div class="bg-black border border-gray-800 p-4 font-mono text-xs md:text-sm overflow-x-auto">
+                            <div class="text-gray-500 mb-2"># Memory Grid Analysis: struct { char a; double b; } (LP64)</div>
+                            <div class="flex flex-col gap-2 mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-blue-500 min-w-[48px]">[0x00]</span>
+                                    <span class="bg-green-900 text-green-400 px-2 py-1 text-center w-8">a</span>
+                                    <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
+                                    <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
+                                    <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
+                                    <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
+                                    <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
+                                    <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
+                                    <span class="bg-gray-800 text-gray-500 px-2 py-1 text-center w-8" title="padding">p</span>
+                                    <span class="text-gray-500 ml-4 hidden md:inline">// 7 bytes padding</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-blue-500 min-w-[48px]">[0x08]</span>
+                                    <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
+                                    <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
+                                    <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
+                                    <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
+                                    <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
+                                    <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
+                                    <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
+                                    <span class="bg-yellow-900 text-yellow-400 px-2 py-1 text-center w-8">b</span>
+                                    <span class="text-gray-500 ml-4 hidden md:inline">// 8 bytes aligned</span>
+                                </div>
+                            </div>
+                            <div class="h-px bg-gray-800 my-3"></div>
+                            <div class="text-cyan-400">>> TOTAL SIZE: 16 bytes (Wasted space: 43%)</div>
+                        </div>
+
+                        <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                            <div class="font-mono text-xs text-gray-500">
+                                <span style="color: var(--term-green)">FRONTEND:</span> HTML5 · CSS3 · Vanilla JS<br>
+                                <span style="color: var(--term-green)">DEPLOYMENT:</span> GitHub Pages
+                            </div>
+                            <span class="text-gray-500 text-xs">fig 1.4 - Virtual Memory Hex Dump</span>
+                        </div>
+
+                        <div class="mt-6 flex flex-col md:flex-row gap-4">
+                            <a href="https://staruwos.github.io/structviz" target="_blank" class="inline-block w-full md:w-auto">
+                                <button class="tui-btn w-full md:w-auto justify-center">LIVE_DEMO</button>
+                            </a>
+                            <a href="https://github.com/staruwos/structviz" target="_blank" class="inline-block w-full md:w-auto">
+                                <button class="tui-btn w-full md:w-auto justify-center">VIEW_SOURCE</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Beehive Content -->
+                <div id="content-beehive" class="project-content hidden">
+                    <div class="tui-window p-4 md:p-6">
+                        <div class="tui-title">BEEHIVE</div>
+
+                        <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> BEEHIVE_TELEMETRY_PIPELINE</h2>
+                        <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
+                            // Architecture: Distributed MQTT swarm bridging to Web.<br>
+                            // High-frequency telemetry ingestion via Python service.
+                        </p>
+
+                        <div class="bg-black border border-gray-800 p-2 md:p-4 overflow-hidden">
+                            <svg class="w-full h-auto" viewBox="0 0 650 220" xmlns="http://www.w3.org/2000/svg" style="background: #000;">
+                                <defs>
+                                    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                        <path d="M0,0 L0,6 L9,3 z" fill="#666" />
+                                    </marker>
+                                </defs>
+
+                                <rect x="20" y="30" width="100" height="40" rx="2" 
+                                    style="stroke: var(--term-yellow) !important; fill: #000 !important; stroke-width: 2px;" />
+                                <text x="70" y="55" text-anchor="middle" 
+                                    style="fill: var(--term-yellow) !important; font-size: 11px !important; font-weight: bold;">NODE_ALPHA</text>
+
+                                <rect x="20" y="90" width="100" height="40" rx="2" 
+                                    style="stroke: var(--term-yellow) !important; fill: #000 !important; stroke-width: 2px;" />
+                                <text x="70" y="115" text-anchor="middle" 
+                                    style="fill: var(--term-yellow) !important; font-size: 11px !important; font-weight: bold;">NODE_BETA</text>
+
+                                <rect x="20" y="150" width="100" height="40" rx="2" 
+                                    style="stroke: var(--term-yellow) !important; fill: #000 !important; stroke-width: 2px;" />
+                                <text x="70" y="175" text-anchor="middle" 
+                                    style="fill: var(--term-yellow) !important; font-size: 11px !important; font-weight: bold;">NODE_GAMMA</text>
+
+                                <path d="M120 50 L160 50 L160 110 L200 110" fill="none" stroke="#444" stroke-width="2" />
+                                <path d="M120 110 L200 110" fill="none" stroke="#444" stroke-width="2" />
+                                <path d="M120 170 L160 170 L160 110 L200 110" fill="none" stroke="#444" stroke-width="2" />
+
+                                <line x1="200" y1="110" x2="238" y2="110" stroke="#444" stroke-width="2" marker-end="url(#arrow-green)" style="stroke: #2ecc71  !important;" />
+
+
+                                <rect x="240" y="60" width="160" height="100" rx="2" 
+                                    style="stroke: var(--term-green) !important; fill: #000 !important; stroke-width: 2px;" />
+                                
+                                <text x="320" y="90" text-anchor="middle" 
+                                    style="fill: var(--term-green) !important; font-size: 14px !important; font-weight: bold;">PYTHON_BRIDGE</text>
+                                <text x="320" y="110" text-anchor="middle" 
+                                    style="fill: var(--term-green) !important; font-size: 10px !important;">(mqtt broker)</text>
+                                <text x="320" y="130" text-anchor="middle" 
+                                    style="fill: #666 !important; font-size: 10px !important;">Writes JSON IO</text>
+
+
+                                <line x1="400" y1="110" x2="448" y2="110" stroke="#444" stroke-width="2" marker-end="url(#arrow-green)" style="stroke: #2ecc71 !important;" />
+
+
+                                <rect x="450" y="40" width="140" height="140" rx="2" 
+                                    style="stroke: var(--term-cyan) !important; fill: #000 !important; stroke-width: 2px;" />
+                                
+                                <text x="520" y="80" text-anchor="middle" 
+                                    style="fill: var(--term-cyan) !important; font-size: 14px !important; font-weight: bold;">NGINX_WEB</text>
+                                <text x="520" y="105" text-anchor="middle" 
+                                    style="fill: var(--term-cyan) !important; font-size: 10px !important;">(:80 /index.html)</text>
+                                
+                                <rect x="470" y="120" width="100" height="40" rx="1" 
+                                    style="stroke: var(--term-cyan) !important; fill: #000 !important; stroke-dasharray: 4;" />
+                                <text x="520" y="145" text-anchor="middle" 
+                                    style="fill: var(--term-cyan) !important; font-size: 9px !important;">VISUALIZER_UI</text>
+
+                            </svg>
+                        </div>
+
+                        <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                            <div class="font-mono text-xs text-gray-500">
+                                <span style="color: var(--term-green)">TARGET:</span> Raspberry Pi<br>
+                                <span style="color: var(--term-green)">STACK:</span> Yocto · Mosquitto · Python
+                            </div>
+                            <span class="text-gray-500 text-xs">fig 1.2 - Swarm Architecture</span>
+                        </div>
+                        <div class="mt-6">
+                            <a href="https://github.com/staruwos/meta-beehive" target="_blank" class="inline-block w-full md:w-auto">
+                                <button class="tui-btn w-full md:w-auto justify-center">VIEW_ON_GITHUB</button>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Auto Patcher Content -->
+                <div id="content-autopatcher" class="project-content hidden">
+                    <div class="tui-window p-4 md:p-6">
+                        <div class="tui-title">AUTO_PATCHER</div>
+
+                        <h2 class="text-xl md:text-2xl font-bold text-green-400 mb-2">> QT_FRAMELESS_LAUNCHER</h2>
+                        <p class="text-gray-300 font-mono mb-6 border-l-2 border-gray-700 pl-4 max-w-3xl text-sm md:text-base">
+                            // Custom C++ game updater built with Qt.<br>
+                            // Features: Non-rectangular window masking, SHA-256 integrity verification, and zero-dependency ZIP extraction (Miniz).
+                        </p>
+
+                        <div class="bg-black border border-gray-800 p-2 overflow-hidden flex justify-center items-center">
+                            <img src="OLlELAM.jpg" alt="Custom Patcher UI" class="max-w-full h-auto max-h-64 object-contain border border-gray-800 opacity-90 hover:opacity-100 transition-opacity">
+                        </div>
+
+                        <div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
+                            <div class="font-mono text-xs text-gray-500">
+                                <span style="color: var(--term-green)">CORE:</span> C++17 · Qt Widgets<br>
+                                <span style="color: var(--term-green)">NET:</span> QNetworkAccessManager · SSL
+                            </div>
+                            <span class="text-gray-500 text-xs">fig 1.3 - Custom Stylesheet Implementation</span>
+                        </div>
+
+                        <div class="mt-6">
+                            <a href="https://github.com/staruwos/AutoPatcher" target="_blank" class="inline-block w-full md:w-auto">
+                                <button class="tui-btn w-full md:w-auto justify-center">VIEW_SOURCE</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         
         <div class="status-bar">
             <div class="key-hint"><span>F1</span>Docs</div>
@@ -266,5 +336,38 @@
         </div>
 
     </div> 
+
+<script>
+    function openProject(projectName) {
+        // 1. Hide the directory view
+        document.getElementById('dir-view').classList.add('hidden');
+        
+        // 2. Show the project view container
+        document.getElementById('project-view').classList.remove('hidden');
+        
+        // 3. Hide all project contents, then reveal the selected one
+        document.querySelectorAll('.project-content').forEach(el => {
+            el.classList.add('hidden');
+        });
+        document.getElementById('content-' + projectName).classList.remove('hidden');
+        
+        // 4. Update the terminal titles to reflect the new path
+        document.getElementById('term-title').innerText = `guest@portfolio: ~/systems/${projectName}`;
+        document.getElementById('header-title').innerText = `/SYSTEMS/${projectName.toUpperCase()}`;
+    }
+
+    function closeProject() {
+        // 1. Hide the project view container
+        document.getElementById('project-view').classList.add('hidden');
+        
+        // 2. Show the directory view again
+        document.getElementById('dir-view').classList.remove('hidden');
+        
+        // 3. Reset the terminal titles to the root directory
+        document.getElementById('term-title').innerText = `guest@portfolio: ~/systems`;
+        document.getElementById('header-title').innerText = `/SYSTEMS`;
+    }
+</script>
+
 </body>
 </html>
