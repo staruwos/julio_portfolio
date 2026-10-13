@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Systems and software engineering projects by Julio Nicolucci, covering C++, embedded Linux, Docker, MQTT, Qt, cross-compilation, and developer tools.">
+    <meta name="author" content="Julio Trasferetti Nicolucci">
     <link rel="canonical" href="https://julionico.online/systems.html">
+    <meta property="og:locale" content="en_US">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://julionico.online/systems.html">
     <meta property="og:title" content="Systems and Software Projects | Julio Nicolucci">
@@ -27,7 +29,7 @@
     "alternateName": "Julio Nicolucci",
     "url": "https://julionico.online",
     "jobTitle": "Software Engineer & Game Developer",
-    "description": "Software engineer and game developer specializing in C++, Unreal Engine, embedded systems, and interactive software.",
+    "description": "Software engineer specialized in Game Development and interactive software.",
     "knowsAbout": ["Unreal Engine", "C++", "Java", "Embedded Systems", "Computer Science", "Godot"],
     "sameAs": [
         "https://github.com/staruwos",
@@ -58,46 +60,49 @@
                     </a>
                 </div>
                 <h1 class="text-3xl md:text-4xl font-bold text-white mb-2" id="header-title">/SYSTEMS</h1>
+                <p class="text-lg text-gray-400 font-mono">
+                    Systems programming and embedded software projects covering C++, Linux, Docker, MQTT, Qt, and cross-compilation.
+                </p>
             </header>
 
             <!-- DIRECTORY LISTING VIEW -->
             <div id="dir-view" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 <!-- Folder: Blastcomp -->
-                <div onclick="openProject('blastcomp')" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
+                <a href="systems/blastcomp.html" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
                     <div class="flex items-center gap-4 font-mono text-cyan-500 group-hover:text-cyan-400">
                         <span class="text-3xl">📁</span>
                         <span class="font-bold text-lg md:text-xl">blastcomp/</span>
                     </div>
                     <p class="text-gray-500 text-sm mt-4 font-mono">// Docker container for M68K cross-compilation.</p>
-                </div>
+                </a>
 
                 <!-- Folder: Structviz -->
-                <div onclick="openProject('structviz')" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
+                <a href="systems/structviz.html" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
                     <div class="flex items-center gap-4 font-mono text-cyan-500 group-hover:text-cyan-400">
                         <span class="text-3xl">📁</span>
                         <span class="font-bold text-lg md:text-xl">structviz/</span>
                     </div>
                     <p class="text-gray-500 text-sm mt-4 font-mono">// C struct padding and alignment visualizer.</p>
-                </div>
+                </a>
 
                 <!-- Folder: Beehive -->
-                <div onclick="openProject('beehive')" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
+                <a href="systems/beehive.html" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
                     <div class="flex items-center gap-4 font-mono text-cyan-500 group-hover:text-cyan-400">
                         <span class="text-3xl">📁</span>
                         <span class="font-bold text-lg md:text-xl">beehive/</span>
                     </div>
                     <p class="text-gray-500 text-sm mt-4 font-mono">// Distributed MQTT swarm telemetry pipeline.</p>
-                </div>
+                </a>
 
                 <!-- Folder: Auto Patcher -->
-                <div onclick="openProject('autopatcher')" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
+                <a href="systems/auto-patcher.html" class="tui-window p-4 md:p-6 cursor-pointer hover:border-cyan-500 transition-colors group">
                     <div class="flex items-center gap-4 font-mono text-cyan-500 group-hover:text-cyan-400">
                         <span class="text-3xl">📁</span>
                         <span class="font-bold text-lg md:text-xl">auto_patcher/</span>
                     </div>
                     <p class="text-gray-500 text-sm mt-4 font-mono">// Custom C++ game updater built with Qt.</p>
-                </div>
+                </a>
 
             </div>
 
@@ -139,8 +144,8 @@
                         </div>
 
                         <div class="mt-6">
-                            <a href="https://github.com/staruwos/blastcomp" target="_blank" class="inline-block w-full md:w-auto">
-                                <button class="tui-btn w-full md:w-auto justify-center">VIEW_ON_GITHUB</button>
+                            <a href="https://github.com/staruwos/blastcomp" target="_blank" rel="noopener noreferrer" class="tui-btn inline-block w-full md:w-auto justify-center">
+                                VIEW_ON_GITHUB
                             </a>
                         </div>
                     </div>
@@ -198,11 +203,11 @@
                         </div>
 
                         <div class="mt-6 flex flex-col md:flex-row gap-4">
-                            <a href="https://staruwos.github.io/structviz" target="_blank" class="inline-block w-full md:w-auto">
-                                <button class="tui-btn w-full md:w-auto justify-center">LIVE_DEMO</button>
+                            <a href="https://staruwos.github.io/structviz" target="_blank" rel="noopener noreferrer" class="tui-btn inline-block w-full md:w-auto justify-center">
+                                LIVE_DEMO
                             </a>
-                            <a href="https://github.com/staruwos/structviz" target="_blank" class="inline-block w-full md:w-auto">
-                                <button class="tui-btn w-full md:w-auto justify-center">VIEW_SOURCE</button>
+                            <a href="https://github.com/staruwos/structviz" target="_blank" rel="noopener noreferrer" class="tui-btn inline-block w-full md:w-auto justify-center">
+                                VIEW_SOURCE
                             </a>
                         </div>
                     </div>
@@ -287,8 +292,8 @@
                             <span class="text-gray-500 text-xs">fig 1.2 - Swarm Architecture</span>
                         </div>
                         <div class="mt-6">
-                            <a href="https://github.com/staruwos/meta-beehive" target="_blank" class="inline-block w-full md:w-auto">
-                                <button class="tui-btn w-full md:w-auto justify-center">VIEW_ON_GITHUB</button>
+                            <a href="https://github.com/staruwos/meta-beehive" target="_blank" rel="noopener noreferrer" class="tui-btn inline-block w-full md:w-auto justify-center">
+                                VIEW_ON_GITHUB
                             </a>
                         </div>
                     </div>
@@ -319,8 +324,8 @@
                         </div>
 
                         <div class="mt-6">
-                            <a href="https://github.com/staruwos/AutoPatcher" target="_blank" class="inline-block w-full md:w-auto">
-                                <button class="tui-btn w-full md:w-auto justify-center">VIEW_SOURCE</button>
+                            <a href="https://github.com/staruwos/AutoPatcher" target="_blank" rel="noopener noreferrer" class="tui-btn inline-block w-full md:w-auto justify-center">
+                                VIEW_SOURCE
                             </a>
                         </div>
                     </div>

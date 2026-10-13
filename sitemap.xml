@@ -20,4 +20,25 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://julionico.online/games/turn-based-battle-system.html</loc>
+  </url>
+  <url>
+    <loc>https://julionico.online/games/rts-game.html</loc>
+  </url>
+  <url>
+    <loc>https://julionico.online/games/web-rpg.html</loc>
+  </url>
+  <url>
+    <loc>https://julionico.online/systems/blastcomp.html</loc>
+  </url>
+  <url>
+    <loc>https://julionico.online/systems/structviz.html</loc>
+  </url>
+  <url>
+    <loc>https://julionico.online/systems/beehive.html</loc>
+  </url>
+  <url>
+    <loc>https://julionico.online/systems/auto-patcher.html</loc>
+  </url>
 </urlset>
