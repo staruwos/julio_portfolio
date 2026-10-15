@@ -1,0 +1,266 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+
+  --panel: rgba(11, 18, 31, 0.92);
+  --border: rgba(255, 255, 255, 0.12);
+  --primary: #22c55e;
+  --secondary: #38bdf8;
+  --text: #f8fafc;
+  --text-muted: #9ca3af;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  background: #07101d;
+}
+
+body {
+  color: var(--text);
+}
+
+#app {
+  display: grid;
+  grid-template-columns: minmax(280px, 25%) minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+}
+
+/* Right-side Three.js area */
+#viewport {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #07101d;
+}
+
+#viewport canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+canvas {
+  display: block;
+}
+
+/* Left-side control panel */
+#toolbar {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  height: 100%;
+  max-height: none;
+  padding: 18px;
+  overflow-y: auto;
+
+  border: 0;
+  border-right: 1px solid var(--border);
+  border-radius: 0;
+
+  background: var(--panel);
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.2);
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+}
+
+.subtitle {
+  margin: 0 0 18px;
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.section {
+  margin-top: 16px;
+}
+
+.section-title,
+label {
+  display: block;
+  margin: 0 0 7px;
+
+  color: #dbeafe;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+select,
+button,
+input {
+  font: inherit;
+}
+
+select,
+button {
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
+button {
+  padding: 9px 11px;
+  cursor: pointer;
+
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+}
+
+button:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.13);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+.tool-grid,
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tool.active {
+  border-color: var(--primary);
+  color: #052e16;
+  background: var(--primary);
+}
+
+.primary {
+  border-color: #2dd4bf;
+  color: #042f2e;
+  background: #2dd4bf;
+  font-weight: 700;
+}
+
+.primary:hover {
+  border-color: #5eead4;
+  background: #5eead4;
+}
+
+.danger {
+  border-color: rgba(239, 68, 68, 0.45);
+  color: #fee2e2;
+  background: rgba(239, 68, 68, 0.18);
+}
+
+.range-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+input[type="range"] {
+  width: 100%;
+  accent-color: var(--secondary);
+}
+
+#speedValue {
+  min-width: 42px;
+  color: #bae6fd;
+  font-size: 0.84rem;
+  text-align: right;
+}
+
+#status {
+  min-height: 42px;
+  margin-top: 14px;
+  padding: 10px 12px;
+
+  border-left: 3px solid var(--secondary);
+  border-radius: 6px;
+
+  color: #dbeafe;
+  background: rgba(56, 189, 248, 0.09);
+  font-size: 0.83rem;
+  line-height: 1.4;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 7px;
+  margin-top: 14px;
+
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.start-color {
+  background: #22c55e;
+}
+
+.goal-color {
+  background: #ef4444;
+}
+
+.explored-color {
+  background: #38bdf8;
+}
+
+.path-color {
+  background: #facc15;
+}
+
+.instructions {
+  margin: 14px 0 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 800px) {
+  #app {
+    grid-template-columns: minmax(240px, 38%) minmax(0, 1fr);
+  }
+
+  #toolbar {
+    padding: 12px;
+  }
+
+  .tool-grid,
+  .button-grid,
+  .legend {
+    grid-template-columns: 1fr;
+  }
+}
