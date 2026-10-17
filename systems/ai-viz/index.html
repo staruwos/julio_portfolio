@@ -23,112 +23,85 @@
 
 <body>
     <div id="app">
-        <aside id="toolbar">
-            <h1>3D Pathfinding Playground</h1>
-
-            <p class="subtitle">
-            Build obstacles and compare pathfinding and simple game-AI behaviors.
-            </p>
-
-            <section class="section">
-            <h2 class="section-title">Editing tool</h2>
-
-            <div class="tool-grid">
-                <button class="tool active" data-tool="wall">
-                Toggle wall
-                </button>
-
-                <button class="tool" data-tool="erase">
-                Erase wall
-                </button>
-
-                <button class="tool" data-tool="start">
-                Place start
-                </button>
-
-                <button class="tool" data-tool="goal">
-                Place goal
-                </button>
-            </div>
-            </section>
-
-            <section class="section">
-            <label for="algorithm">Pathfinding algorithm</label>
-
-            <select id="algorithm">
-                <option value="astar">A* Search</option>
-                <option value="dijkstra">Dijkstra</option>
-                <option value="bfs">Breadth-First Search</option>
-                <option value="greedy">Greedy Best-First</option>
-            </select>
-            </section>
-
-            <section class="section">
-            <label for="behavior">Game-AI behavior</label>
-
-            <select id="behavior">
-                <option value="goal">Move to goal</option>
-                <option value="patrol">Patrol between start and goal</option>
-                <option value="wander">Wander to random tiles</option>
-            </select>
-            </section>
-
-            <section class="section">
-            <label for="speed">Animation speed</label>
-
-            <div class="range-row">
-                <input
-                id="speed"
-                type="range"
-                min="1"
-                max="100"
-                value="75"
-                >
-
-                <span id="speedValue">75%</span>
-            </div>
-            </section>
-
-            <section class="section button-grid">
-            <button id="run" class="primary">Run AI</button>
-            <button id="stop" class="danger">Stop</button>
-            <button id="random">Random walls</button>
-            <button id="clear">Clear board</button>
-            </section>
-
-            <div id="status" aria-live="polite">
-            Select a tool, then click a tile.
-            </div>
-
-            <div class="legend">
-            <div class="legend-item">
-                <span class="swatch start-color"></span>
-                Start
-            </div>
-
-            <div class="legend-item">
-                <span class="swatch goal-color"></span>
-                Goal
-            </div>
-
-            <div class="legend-item">
-                <span class="swatch explored-color"></span>
-                Explored
-            </div>
-
-            <div class="legend-item">
-                <span class="swatch path-color"></span>
-                Final path
-            </div>
-            </div>
-
-            <p class="instructions">
-            Left-click a tile to edit it. Drag to rotate the camera.
-            Use the mouse wheel to zoom and right-drag to pan.
-            </p>
-        </aside>
-
+        <!-- The viewport now acts as the full-screen background -->
         <main id="viewport" aria-label="3D pathfinding grid"></main>
+
+        <!-- Floating UI Layer -->
+        <div id="ui-layer">
+            
+            <!-- Top Left: Title and Status -->
+            <div class="panel top-left">
+                <h1>Pathfinding</h1>
+                <div id="status" aria-live="polite">Select a tool, then click a tile.</div>
+            </div>
+
+            <!-- Left Edge: Vertical Tool Palette -->
+            <div class="panel middle-left">
+                <button class="tool active" data-tool="wall" title="Toggle wall">🧱</button>
+                <button class="tool" data-tool="erase" title="Erase wall">🧹</button>
+                <button class="tool" data-tool="start" title="Place start">🟢</button>
+                <button class="tool" data-tool="goal" title="Place goal">🚩</button>
+            </div>
+
+            <!-- Top Right: Settings -->
+            <div class="panel top-right">
+                <section class="section">
+                    <label for="algorithm">Algorithm</label>
+                    <select id="algorithm">
+                        <option value="astar">A* Search</option>
+                        <option value="dijkstra">Dijkstra</option>
+                        <option value="bfs">Breadth-First Search</option>
+                        <option value="greedy">Greedy Best-First</option>
+                    </select>
+                </section>
+                <section class="section">
+                    <label for="behavior">AI Behavior</label>
+                    <select id="behavior">
+                        <option value="goal">Move to goal</option>
+                        <option value="patrol">Patrol</option>
+                        <option value="wander">Wander</option>
+                    </select>
+                </section>
+                <section class="section">
+                    <label for="speed">Speed</label>
+                    <div class="range-row">
+                        <input id="speed" type="range" min="1" max="100" value="75">
+                    </div>
+                </section>
+            </div>
+
+            <!-- Bottom Center: Action Bar -->
+            <div class="panel bottom-center">
+                <button id="run" class="primary">▶ Run AI</button>
+                <button id="stop" class="danger">⏹ Stop</button>
+                <button id="random">🎲 Random</button>
+                <button id="clear">🗑 Clear</button>
+            </div>
+
+            <!-- NEW Bottom Right: Tips, Controls, and Legend -->
+            <div class="panel bottom-right">
+                <section class="section">
+                    <h2 class="sub-heading">Controls 🎮</h2>
+                    <ul class="control-list">
+                        <li>🖱️ <b>Left-click:</b> Edit tile</li>
+                        <li>🔄 <b>Left-drag:</b> Rotate</li>
+                        <li>↔️ <b>Right-drag:</b> Pan</li>
+                        <li>🔍 <b>Scroll:</b> Zoom</li>
+                    </ul>
+                </section>
+                
+                <section class="section">
+                    <h2 class="sub-heading">Legend 🗺️</h2>
+                    <div class="legend">
+                        <div class="legend-item"><span class="swatch start-color"></span> Start</div>
+                        <div class="legend-item"><span class="swatch goal-color"></span> Goal</div>
+                        <div class="legend-item"><span class="swatch explored-color"></span> Explored</div>
+                        <div class="legend-item"><span class="swatch path-color"></span> Path</div>
+                    </div>
+                </section>
+            </div>
+            
+        </div>
     </div>
 
   <script type="module" src="script.js"></script>

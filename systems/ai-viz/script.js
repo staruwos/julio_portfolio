@@ -4,22 +4,23 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 const GRID_SIZE = 18;
 const HALF_GRID = GRID_SIZE / 2;
 
+// Replaced Tailwind colors with earthy, organic tones
 const COLORS = {
-  background: 0x07101d,
-  ground: 0x111c2e,
-  wall: 0x5b6b82,
-  start: 0x22c55e,
-  goal: 0xef4444,
-  explored: 0x38bdf8,
-  path: 0xfacc15
+  background: 0xe8e4d9, // Warm paper
+  ground: 0xdcd8cc,     // Slightly darker paper
+  wall: 0x3a3f44,       // Charcoal / graphite
+  start: 0x4a7c59,      // Organic green
+  goal: 0xb55a5a,       // Brick red
+  explored: 0x8ba6b5,   // Muted sketch blue
+  path: 0xd4a373        // Mustard/tan
 };
 
 const viewport = document.querySelector("#viewport");
 
-
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(COLORS.background);
-scene.fog = new THREE.Fog(COLORS.background, 19, 38);
+// Subtle fog to blend the edges into the paper background
+//scene.fog = new THREE.Fog(COLORS.background, 15, 45);
 
 const camera = new THREE.PerspectiveCamera(
   48,
@@ -43,24 +44,23 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 viewport.appendChild(renderer.domElement);
 
 const controls = new OrbitControls(camera, renderer.domElement);
-
 controls.enableDamping = true;
 controls.target.set(2, 0, 0);
 controls.minDistance = 8;
 controls.maxDistance = 34;
 controls.maxPolarAngle = Math.PI / 2.05;
 
-/* Lighting */
+/* Lighting - adjusted for a daylight/room setting instead of dark mode */
 
 const hemisphereLight = new THREE.HemisphereLight(
-  0xbfe3ff,
-  0x172033,
-  1.8
+  0xffffff, // Sky color (white)
+  0x8d8d8d, // Ground color (greyish)
+  1.2
 );
 
 scene.add(hemisphereLight);
 
-const sun = new THREE.DirectionalLight(0xffffff, 2.4);
+const sun = new THREE.DirectionalLight(0xfffaed, 2.0); // Warm sunlight
 
 sun.position.set(8, 18, 10);
 sun.castShadow = true;
@@ -69,6 +69,8 @@ sun.shadow.camera.left = -14;
 sun.shadow.camera.right = 14;
 sun.shadow.camera.top = 14;
 sun.shadow.camera.bottom = -14;
+// Soften the shadows slightly to look more like ambient room light
+sun.shadow.bias = -0.0005; 
 
 scene.add(sun);
 
