@@ -4,7 +4,7 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 const GRID_SIZE = 18;
 const HALF_GRID = GRID_SIZE / 2;
 
-// Replaced Tailwind colors with earthy, organic tones
+// earthy, organic tones
 const COLORS = {
   background: 0xe8e4d9, // Warm paper
   ground: 0xdcd8cc,     // Slightly darker paper

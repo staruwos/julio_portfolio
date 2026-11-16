@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Flying Nimbus (Kinto'un) 3D cel-shaded flight game prototype built with Three.js and custom GLSL shaders by Julio Nicolucci.">
+    <meta name="author" content="Julio Trasferetti Nicolucci">
+    <link rel="canonical" href="https://julionico.online/games/nimbus.html">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://julionico.online/games/nimbus.html">
+    <meta property="og:title" content="Flying Nimbus Prototype | Julio Nicolucci">
+    <meta property="og:description"
+        content="A 3D Dragon Ball cel-shaded flight prototype built with Three.js and custom GLSL shaders.">
+    <meta property="og:site_name" content="Julio Nicolucci Portfolio">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Flying Nimbus Prototype | Julio Nicolucci">
+    <meta name="twitter:description"
+        content="A 3D Dragon Ball cel-shaded flight prototype built with Three.js and custom GLSL shaders.">
+    <meta name="theme-color" content="#050505">
+    <title>Flying Nimbus Prototype | Julio Nicolucci</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="../terminal.css" rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "VideoGame",
+        "name": "Flying Nimbus (Kinto'un)",
+        "description": "A 3D procedural cel-shaded flight prototype built with Three.js and custom GLSL shaders.",
+        "author": {"@type": "Person", "name": "Julio Trasferetti Nicolucci", "url": "https://julionico.online"},
+        "url": "https://julionico.online/games/nimbus.html",
+        "gameEngine": "Three.js / WebGL"
+    }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@700;900&display=swap');
+
+        #game-viewport {
+            position: relative;
+            width: 100%;
+            height: 540px;
+            background-color: #1c7ed6;
+            overflow: hidden;
+            border: 1px solid #333;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        #game-viewport:fullscreen {
+            height: 100vh;
+            width: 100vw;
+            border: none;
+        }
+
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        #canvas-container canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: grab;
+        }
+
+        #canvas-container canvas:active {
+            cursor: grabbing;
+        }
+
+        .db-font {
+            font-family: 'Bangers', cursive;
+            letter-spacing: 0.06em;
+        }
+
+        .anime-card {
+            background: rgba(255, 250, 235, 0.92);
+            border: 3px solid #1a1626;
+            box-shadow: 4px 5px 0px #1a1626;
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .anime-badge {
+            background: #ff5500;
+            color: #fff8c4;
+            border: 2.5px solid #1a1626;
+            box-shadow: 2px 3px 0px #1a1626;
+            text-shadow: 1.5px 1.5px 0 #1a1626;
+        }
+
+        #speed-lines {
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            background: radial-gradient(circle at center, transparent 52%, rgba(255, 248, 196, 0.28) 85%, rgba(255, 224, 66, 0.55) 100%);
+            mix-blend-mode: screen;
+        }
+
+        .key-pill {
+            display: inline-block;
+            padding: 1px 6px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: #1a1626;
+            background: #ffe042;
+            border: 2px solid #1a1626;
+            border-radius: 6px;
+            box-shadow: 1px 2px 0px #1a1626;
+            margin: 0 2px;
+        }
+
+        #bottom-hud {
+            position: absolute;
+            bottom: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 20;
+            padding: 8px 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            pointer-events: none;
+            width: max-content;
+            max-width: 94%;
+        }
+
+        .hud-stats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .hud-stats .anime-badge {
+            padding: 2px 10px;
+            font-size: 0.95rem;
+            border-radius: 8px;
+        }
+
+        .hud-controls {
+            display: flex;
+            gap: 10px;
+            font-size: 0.75rem;
+            font-weight: 900;
+            color: #1a1626;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        @media (max-width: 768px) {
+            #game-viewport {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="linux-terminal relative flex flex-col">
+        <div class="terminal-header">
+            <div class="terminal-title">guest@portfolio: ~/games/nimbus</div>
+            <div class="terminal-controls">
+                <div class="control-btn minimize"></div>
+                <div class="control-btn maximize"></div>
+                <div class="control-btn close"></div>
+            </div>
+        </div>
+
+        <main class="terminal-body flex-1 p-4 md:p-8 pb-16">
+            <div class="max-w-5xl mx-auto">
+                <header class="mb-8 border-b-2 border-dashed border-gray-600 pb-6">
+                    <nav class="mb-4">
+                        <a href="../games.html" class="text-cyan-500 hover:text-white font-bold">&lt; /games/</a>
+                    </nav>
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <div>
+                            <h1 class="text-3xl md:text-4xl font-bold text-green-400 mb-2">Flying Nimbus (Kinto'un)</h1>
+                            <p class="text-base md:text-lg text-gray-300 font-mono">
+                                Procedural 3D anime flight prototype built with Three.js and custom GLSL cel-shaders.
+                            </p>
+                        </div>
+                        <button id="fullscreen-btn" type="button" class="tui-btn self-start md:self-auto">
+                            FULLSCREEN_MODE
+                        </button>
+                    </div>
+                </header>
+
+                <!-- Interactive Terminal Viewport -->
+                <section id="play" class="tui-window p-2 md:p-4 mb-8">
+                    <div class="tui-title">NIMBUS_GL.EXE [RUNNING]</div>
+                    <div id="game-viewport" tabindex="0">
+                        <div id="canvas-container"></div>
+                        <div id="speed-lines"></div>
+
+                        <div id="bottom-hud" class="anime-card">
+                            <div class="hud-stats">
+                                <span class="anime-badge db-font">SPEED: <span id="hud-speed">0</span></span>
+                                <span class="anime-badge db-font">ALT: <span id="hud-alt">120</span>m</span>
+                                <span class="anime-badge db-font">RINGS: <span id="hud-rings">0</span> / 12</span>
+                            </div>
+                            <div class="hud-controls">
+                                <span><span class="key-pill">W</span><span class="key-pill">A</span><span
+                                        class="key-pill">S</span><span class="key-pill">D</span> Steer</span>
+                                <span><span class="key-pill">SPACE</span> Ascend</span>
+                                <span><span class="key-pill">SHIFT</span> Descend</span>
+                                <span><span class="key-pill">Q</span>/<span class="key-pill">E</span> or Drag
+                                    Orbit</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Project Details -->
+                <section class="tui-window p-4 md:p-8">
+                    <div class="tui-title">README.MD</div>
+                    <h2 class="text-xl font-bold text-white mb-4">Project Overview</h2>
+                    <p class="text-gray-300 font-mono mb-6">
+                        A zero-asset procedural 3D gameplay prototype inspired by classic Dragon Ball. Built completely
+                        from primitives and custom shaders, featuring a 26-sphere volumetric breathing Nimbus cloud,
+                        pooled turbulent cloud trail particles, ribbon speed streaks, and 3-band Akira Toriyama
+                        cel-shading with screen-space compensated inverted-hull outlines.
+                    </p>
+                    <h2 class="text-xl font-bold text-white mb-4">Technology</h2>
+                    <p class="text-cyan-400 font-mono mb-6">Three.js · WebGL · GLSL Shaders · JavaScript · Web Audio API
+                    </p>
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <button id="focus-game-btn" type="button"
+                            class="tui-btn w-full md:w-auto">FOCUS_VIEWPORT</button>
+                        <a href="https://github.com/staruwos" target="_blank" rel="noopener noreferrer"
+                            class="tui-btn w-full md:w-auto">VIEW_GITHUB</a>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <div class="status-bar">
+            <div class="key-hint"><span>WASD</span>Steer</div>
+            <div class="key-hint"><span>SPACE/SHIFT</span>Altitude</div>
+            <div class="key-hint"><span>Q/E</span>Camera</div>
+            <div class="key-hint ml-auto">STATUS: RUNNING (WEBGL)</div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // ============================================================================
+        // 1. TUNABLE CONSTANTS
+        // ============================================================================
+        const CONFIG = {
+            MAX_SPEED: 78.0,
+            MIN_SPEED: -18.0,
+            IDLE_CRUISE_SPEED: 8.0,
+            ACCELERATION: 62.0,
+            DAMPING: 2.6,
+            TURN_SPEED: 2.05,
+            VERTICAL_ACCEL: 46.0,
+            VERTICAL_DAMPING: 3.8,
+            BANK_MAX_ANGLE: 0.68,
+            PITCH_MAX_ANGLE: 0.48,
+
+            CAMERA_DISTANCE: 13.5,
+            CAMERA_HEIGHT: 4.2,
+            CAMERA_LERP: 7.5,
+            BASE_FOV: 58,
+            MAX_FOV: 76,
+
+            NIMBUS_PUFF_COUNT: 26,
+            NIMBUS_BREATHE_SPEED: 3.4,
+            NIMBUS_BREATHE_AMP: 0.14,
+
+            TRAIL_POOL_SIZE: 240,
+            TRAIL_EMIT_RATE: 75,
+            TRAIL_PUFF_GROWTH: 3.6,
+            TRAIL_TURBULENCE: 3.2,
+            RIBBON_LENGTH: 42,
+            SPARK_POOL_SIZE: 70,
+
+            OUTLINE_NIMBUS: 0.095,
+            OUTLINE_GOKU: 0.032,
+            OUTLINE_CLOUD: 0.25,
+
+            CLOUD_CLUSTER_COUNT: 48,
+            WORLD_WRAP_RADIUS: 420,
+            RING_COUNT: 12
+        };
+
+        // ============================================================================
+        // 2. SCENE, CAMERA & RENDERER SETUP (SCOPED TO TERMINAL VIEWPORT)
+        // ============================================================================
+        const viewportEl = document.getElementById('game-viewport');
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        const FOG_COLOR = new THREE.Color('#9be8ff');
+        scene.fog = new THREE.FogExp2(FOG_COLOR, 0.0021);
+
+        const getViewportSize = () => ({
+            width: container.clientWidth || 800,
+            height: container.clientHeight || 540
+        });
+
+        const initSize = getViewportSize();
+        const camera = new THREE.PerspectiveCamera(
+            CONFIG.BASE_FOV,
+            initSize.width / initSize.height,
+            0.5,
+            1200
+        );
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+        renderer.setSize(initSize.width, initSize.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.toneMapping = THREE.NoToneMapping;
+        renderer.outputEncoding = THREE.sRGBEncoding;
+        container.appendChild(renderer.domElement);
+
+        const sunDirection = new THREE.Vector3(0.55, 0.78, 0.35).normalize();
+
+        // Fullscreen & Focus helpers
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            if (!document.fullscreenElement) {
+                viewportEl.requestFullscreen().catch(() => { });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+
+        document.getElementById('focus-game-btn').addEventListener('click', () => {
+            viewportEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            viewportEl.focus();
+        });
+
+        // ============================================================================
+        // 3. DRAGON BALL ANIME SHADERS & PROCEDURAL MATERIALS
+        // ============================================================================
+        function createToonMaterial({
+            highlight = '#fff8c4',
+            base = '#ffe042',
+            shadow = '#f28c28',
+            rimColor = '#fffbeb',
+            rimPower = 2.8,
+            rimStrength = 0.65,
+            softEdge = false,
+            opacity = 1.0
+        }) {
+            return new THREE.ShaderMaterial({
+                transparent: softEdge || opacity < 1.0,
+                depthWrite: !softEdge,
+                uniforms: {
+                    uLightDir: { value: sunDirection },
+                    uColorHighlight: { value: new THREE.Color(highlight) },
+                    uColorBase: { value: new THREE.Color(base) },
+                    uColorShadow: { value: new THREE.Color(shadow) },
+                    uRimColor: { value: new THREE.Color(rimColor) },
+                    uRimPower: { value: rimPower },
+                    uRimStrength: { value: rimStrength },
+                    uSoftEdge: { value: softEdge ? 1.0 : 0.0 },
+                    uOpacity: { value: opacity },
+                    uFogColor: { value: FOG_COLOR },
+                    uFogDensity: { value: scene.fog.density }
+                },
+                vertexShader: `
+                  varying vec3 vNormal;
+                  varying vec3 vViewDir;
+                  varying float vFogDepth;
+
+                  void main() {
+                    vec4 worldPos = modelMatrix * vec4(position, 1.0);
+                    vec4 mvPosition = viewMatrix * worldPos;
+                    vNormal = normalize(mat3(modelMatrix) * normal);
+                    vViewDir = normalize(cameraPosition - worldPos.xyz);
+                    vFogDepth = -mvPosition.z;
+                    gl_Position = projectionMatrix * mvPosition;
+                  }
+                `,
+                fragmentShader: `
+                  uniform vec3 uLightDir;
+                  uniform vec3 uColorHighlight;
+                  uniform vec3 uColorBase;
+                  uniform vec3 uColorShadow;
+                  uniform vec3 uRimColor;
+                  uniform float uRimPower;
+                  uniform float uRimStrength;
+                  uniform float uSoftEdge;
+                  uniform float uOpacity;
+                  uniform vec3 uFogColor;
+                  uniform float uFogDensity;
+
+                  varying vec3 vNormal;
+                  varying vec3 vViewDir;
+                  varying float vFogDepth;
+
+                  void main() {
+                    vec3 N = normalize(vNormal);
+                    vec3 V = normalize(vViewDir);
+                    float NdotL = dot(N, uLightDir);
+
+                    float shadowStep = smoothstep(-0.12, -0.07, NdotL);
+                    float highlightStep = smoothstep(0.56, 0.61, NdotL);
+
+                    vec3 col = mix(uColorShadow, uColorBase, shadowStep);
+                    col = mix(col, uColorHighlight, highlightStep);
+
+                    float NdotV = max(dot(N, V), 0.0);
+                    float fresnel = pow(1.0 - NdotV, uRimPower);
+                    float rimMask = smoothstep(0.42, 0.47, fresnel * max(NdotL + 0.4, 0.2));
+                    col = mix(col, uRimColor, rimMask * uRimStrength);
+
+                    float alpha = uOpacity;
+                    if (uSoftEdge > 0.5) {
+                      float edgeSoftness = smoothstep(0.08, 0.62, NdotV);
+                      alpha *= edgeSoftness * 0.86;
+                      col = mix(uColorHighlight, col, edgeSoftness);
+                    }
+
+                    float fogFactor = 1.0 - exp(- (uFogDensity * vFogDepth) * (uFogDensity * vFogDepth));
+                    col = mix(col, uFogColor, clamp(fogFactor, 0.0, 1.0));
+
+                    gl_FragColor = vec4(col, alpha);
+                  }
+                `
+            });
+        }
+
+        function createOutlineMaterial(colorHex, thickness) {
+            return new THREE.ShaderMaterial({
+                side: THREE.BackSide,
+                uniforms: {
+                    uColor: { value: new THREE.Color(colorHex) },
+                    uThickness: { value: thickness },
+                    uFogColor: { value: FOG_COLOR },
+                    uFogDensity: { value: scene.fog.density }
+                },
+                vertexShader: `
+                  uniform float uThickness;
+                  varying float vFogDepth;
+
+                  void main() {
+                    vec4 worldPos = modelMatrix * vec4(position, 1.0);
+                    float dist = length(cameraPosition - worldPos.xyz);
+                    float scaleComp = clamp(dist * 0.035, 0.75, 2.4);
+                    vec3 displaced = position + normal * (uThickness * scaleComp);
+                    vec4 mvPosition = modelViewMatrix * vec4(displaced, 1.0);
+                    vFogDepth = -mvPosition.z;
+                    gl_Position = projectionMatrix * mvPosition;
+                  }
+                `,
+                fragmentShader: `
+                  uniform vec3 uColor;
+                  uniform vec3 uFogColor;
+                  uniform float uFogDensity;
+                  varying float vFogDepth;
+
+                  void main() {
+                    float fogFactor = 1.0 - exp(- (uFogDensity * vFogDepth) * (uFogDensity * vFogDepth));
+                    vec3 finalCol = mix(uColor, uFogColor, clamp(fogFactor, 0.0, 1.0));
+                    gl_FragColor = vec4(finalCol, 1.0);
+                  }
+                `
+            });
+        }
+
+        function createOutlinedMesh(geometry, material, outlineMat) {
+            const mesh = new THREE.Mesh(geometry, material);
+            if (outlineMat) {
+                const outline = new THREE.Mesh(geometry, outlineMat);
+                mesh.add(outline);
+            }
+            return mesh;
+        }
+
+        function createRadialGlowTexture(innerColor, midColor, outerColor) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            const grad = ctx.createRadialGradient(64, 64, 4, 64, 64, 64);
+            grad.addColorStop(0.0, innerColor);
+            grad.addColorStop(0.42, midColor);
+            grad.addColorStop(1.0, outerColor);
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, 128, 128);
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        const MATS = {
+            nimbusCore: createToonMaterial({
+                highlight: '#fff9d2',
+                base: '#ffe042',
+                shadow: '#f28c28',
+                rimColor: '#ffffe0',
+                rimPower: 2.2,
+                rimStrength: 0.75
+            }),
+            nimbusSoftOuter: createToonMaterial({
+                highlight: '#fffbe0',
+                base: '#ffe55c',
+                shadow: '#f59b38',
+                rimColor: '#ffffff',
+                rimPower: 1.8,
+                rimStrength: 0.85,
+                softEdge: true
+            }),
+            nimbusOutline: createOutlineMaterial('#5c2406', CONFIG.OUTLINE_NIMBUS),
+            gokuOutline: createOutlineMaterial('#14111f', CONFIG.OUTLINE_GOKU),
+            gokuHairOutline: createOutlineMaterial('#08070d', CONFIG.OUTLINE_GOKU * 0.85),
+            giOrange: createToonMaterial({
+                highlight: '#ff8533',
+                base: '#ff5100',
+                shadow: '#c22f00',
+                rimColor: '#ffcf87',
+                rimStrength: 0.55
+            }),
+            giBlue: createToonMaterial({
+                highlight: '#3978f5',
+                base: '#194bb8',
+                shadow: '#0d276b',
+                rimColor: '#8ec5ff',
+                rimStrength: 0.45
+            }),
+            skin: createToonMaterial({
+                highlight: '#ffe0cc',
+                base: '#ffbfa0',
+                shadow: '#d98866',
+                rimColor: '#fff2e6',
+                rimStrength: 0.45
+            }),
+            hair: createToonMaterial({
+                highlight: '#3d4159',
+                base: '#171824',
+                shadow: '#0b0c12',
+                rimColor: '#6c7399',
+                rimPower: 3.2,
+                rimStrength: 0.5
+            }),
+            powerPoleRed: createToonMaterial({
+                highlight: '#ff5252',
+                base: '#cc1b1b',
+                shadow: '#800b0b'
+            }),
+            strapCream: createToonMaterial({
+                highlight: '#fff9e6',
+                base: '#e6d299',
+                shadow: '#b39859'
+            }),
+            eyeWhite: new THREE.MeshBasicMaterial({ color: '#ffffff' }),
+            eyeBlack: new THREE.MeshBasicMaterial({ color: '#111118' }),
+            skyCloud: createToonMaterial({
+                highlight: '#ffffff',
+                base: '#eef7ff',
+                shadow: '#8cb8e8',
+                rimColor: '#ffffff',
+                rimPower: 2.5,
+                rimStrength: 0.7
+            }),
+            skyCloudOutline: createOutlineMaterial('#537ea6', CONFIG.OUTLINE_CLOUD),
+            mountainRock: createToonMaterial({
+                highlight: '#98b475',
+                base: '#5a7d5a',
+                shadow: '#38524f',
+                rimColor: '#c2e099',
+                rimStrength: 0.35
+            }),
+            mountainGrass: createToonMaterial({
+                highlight: '#9be858',
+                base: '#52b835',
+                shadow: '#2b7a29',
+                rimColor: '#d4ff8a',
+                rimStrength: 0.45
+            }),
+            ringGold: createToonMaterial({
+                highlight: '#fff8b8',
+                base: '#ffd026',
+                shadow: '#e07a14',
+                rimColor: '#ffffff',
+                rimStrength: 0.8
+            })
+        };
+
+        // ============================================================================
+        // 4. PLAYER RIG: THE FLYING NIMBUS & GOKU
+        // ============================================================================
+        const playerRoot = new THREE.Group();
+        playerRoot.position.set(0, 120, 0);
+        scene.add(playerRoot);
+
+        const playerVisuals = new THREE.Group();
+        playerRoot.add(playerVisuals);
+
+        const nimbusGroup = new THREE.Group();
+        playerVisuals.add(nimbusGroup);
+
+        const puffGeo = new THREE.IcosahedronGeometry(1, 3);
+        const nimbusPuffs = [];
+
+        const puffLayout = [
+            { pos: [0.0, 0.0, 0.8], r: 1.38, core: true },
+            { pos: [-0.85, -0.05, 0.65], r: 1.08, core: true },
+            { pos: [0.85, -0.05, 0.65], r: 1.08, core: true },
+            { pos: [0.0, 0.32, 0.4], r: 1.25, core: true },
+            { pos: [-0.65, 0.2, 0.1], r: 1.15, core: true },
+            { pos: [0.65, 0.2, 0.1], r: 1.15, core: true },
+            { pos: [0.0, -0.1, -0.25], r: 1.32, core: true },
+            { pos: [-0.95, -0.12, -0.15], r: 0.96, core: true },
+            { pos: [0.95, -0.12, -0.15], r: 0.96, core: true },
+            { pos: [-0.48, 0.15, -0.85], r: 1.05, core: true },
+            { pos: [0.48, 0.15, -0.85], r: 1.05, core: true },
+            { pos: [0.0, 0.05, -1.35], r: 1.02, core: true },
+            { pos: [0.0, 0.02, -1.95], r: 0.78, core: true },
+            { pos: [0.0, 0.08, -2.45], r: 0.54, core: true },
+
+            { pos: [0.0, 0.35, 1.35], r: 1.15, core: false },
+            { pos: [-1.18, 0.12, 0.35], r: 1.05, core: false },
+            { pos: [1.18, 0.12, 0.35], r: 1.05, core: false },
+            { pos: [-0.55, 0.55, 0.55], r: 0.98, core: false },
+            { pos: [0.55, 0.55, 0.55], r: 0.98, core: false },
+            { pos: [0.0, -0.45, 0.3], r: 1.18, core: false },
+            { pos: [-1.1, 0.05, -0.65], r: 0.92, core: false },
+            { pos: [1.1, 0.05, -0.65], r: 0.92, core: false },
+            { pos: [-0.4, 0.45, -0.5], r: 0.95, core: false },
+            { pos: [0.4, 0.45, -0.5], r: 0.95, core: false },
+            { pos: [0.0, 0.25, -1.65], r: 0.92, core: false },
+            { pos: [0.0, 0.12, -2.25], r: 0.68, core: false }
+        ];
+
+        puffLayout.forEach((p, idx) => {
+            const mesh = p.core
+                ? createOutlinedMesh(puffGeo, MATS.nimbusCore, MATS.nimbusOutline)
+                : new THREE.Mesh(puffGeo, MATS.nimbusSoftOuter);
+
+            mesh.position.set(p.pos[0], p.pos[1], p.pos[2]);
+            const baseScale = new THREE.Vector3(p.r, p.r * 0.84, p.r * 1.05);
+            mesh.scale.copy(baseScale);
+            nimbusGroup.add(mesh);
+
+            nimbusPuffs.push({
+                mesh,
+                basePos: mesh.position.clone(),
+                baseScale,
+                phase: idx * 0.73,
+                speed: CONFIG.NIMBUS_BREATHE_SPEED * (0.82 + (idx % 5) * 0.11),
+                rotAxis: new THREE.Vector3(
+                    Math.sin(idx * 1.7),
+                    Math.cos(idx * 2.3),
+                    Math.sin(idx * 0.9)
+                ).normalize()
+            });
+        });
+
+        const glowTex = createRadialGlowTexture(
+            'rgba(255, 252, 210, 0.95)',
+            'rgba(255, 215, 55, 0.48)',
+            'rgba(245, 130, 32, 0.0)'
+        );
+        const glowSpriteMat = new THREE.SpriteMaterial({
+            map: glowTex,
+            blending: THREE.AdditiveBlending,
+            transparent: true,
+            depthWrite: false
+        });
+
+        const coreAuraSprite = new THREE.Sprite(glowSpriteMat);
+        coreAuraSprite.scale.set(5.8, 3.9, 1);
+        coreAuraSprite.position.set(0, 0.15, -0.15);
+        nimbusGroup.add(coreAuraSprite);
+
+        const tailAuraSprite = new THREE.Sprite(glowSpriteMat);
+        tailAuraSprite.scale.set(3.8, 2.8, 1);
+        tailAuraSprite.position.set(0, 0.1, -1.7);
+        nimbusGroup.add(tailAuraSprite);
+
+        // Goku
+        const gokuGroup = new THREE.Group();
+        gokuGroup.position.set(0, 0.95, 0.15);
+        playerVisuals.add(gokuGroup);
+
+        const bodyRig = new THREE.Group();
+        bodyRig.rotation.y = -0.22;
+        gokuGroup.add(bodyRig);
+
+        const torsoGroup = new THREE.Group();
+        torsoGroup.position.set(0, 0.95, 0);
+        torsoGroup.rotation.x = 0.26;
+        bodyRig.add(torsoGroup);
+
+        const chestGeo = new THREE.CylinderGeometry(0.38, 0.31, 0.78, 10);
+        const chestMesh = createOutlinedMesh(chestGeo, MATS.giOrange, MATS.gokuOutline);
+        chestMesh.position.y = 0.25;
+        chestMesh.scale.set(1.15, 1, 0.82);
+        torsoGroup.add(chestMesh);
+
+        const collarGeo = new THREE.ConeGeometry(0.22, 0.36, 4);
+        const collarMesh = new THREE.Mesh(collarGeo, MATS.giBlue);
+        collarMesh.position.set(0, 0.52, 0.16);
+        collarMesh.rotation.x = Math.PI;
+        collarMesh.scale.set(1.0, 1.0, 0.6);
+        torsoGroup.add(collarMesh);
+
+        const beltGeo = new THREE.CylinderGeometry(0.34, 0.35, 0.18, 10);
+        const beltMesh = createOutlinedMesh(beltGeo, MATS.giBlue, MATS.gokuOutline);
+        beltMesh.position.y = -0.12;
+        beltMesh.scale.set(1.14, 1, 0.85);
+        torsoGroup.add(beltMesh);
+
+        const sashPivot = new THREE.Group();
+        sashPivot.position.set(-0.34, -0.12, -0.05);
+        torsoGroup.add(sashPivot);
+        const sashGeo = new THREE.BoxGeometry(0.11, 0.52, 0.06);
+        const sash1 = createOutlinedMesh(sashGeo, MATS.giBlue, MATS.gokuOutline);
+        sash1.position.set(-0.08, -0.22, -0.1);
+        sash1.rotation.z = -0.35;
+        const sash2 = createOutlinedMesh(sashGeo, MATS.giBlue, MATS.gokuOutline);
+        sash2.position.set(-0.14, -0.18, -0.22);
+        sash2.rotation.z = -0.55;
+        sashPivot.add(sash1, sash2);
+
+        const poleGeo = new THREE.CylinderGeometry(0.055, 0.055, 1.65, 8);
+        const poleMesh = createOutlinedMesh(poleGeo, MATS.powerPoleRed, MATS.gokuOutline);
+        poleMesh.position.set(0.02, 0.32, -0.31);
+        poleMesh.rotation.z = -0.58;
+        poleMesh.rotation.x = -0.08;
+        torsoGroup.add(poleMesh);
+
+        const strapGeo = new THREE.TorusGeometry(0.39, 0.035, 6, 16);
+        const strapMesh = new THREE.Mesh(strapGeo, MATS.strapCream);
+        strapMesh.position.set(0, 0.25, 0);
+        strapMesh.rotation.y = 0.45;
+        strapMesh.rotation.x = 0.75;
+        strapMesh.scale.set(1.08, 1.15, 0.82);
+        torsoGroup.add(strapMesh);
+
+        const headGroup = new THREE.Group();
+        headGroup.position.set(0, 0.82, 0.06);
+        headGroup.rotation.x = -0.22;
+        headGroup.rotation.y = 0.20;
+        torsoGroup.add(headGroup);
+
+        const neckMesh = createOutlinedMesh(
+            new THREE.CylinderGeometry(0.14, 0.16, 0.24, 8),
+            MATS.skin,
+            MATS.gokuOutline
+        );
+        neckMesh.position.y = -0.14;
+        headGroup.add(neckMesh);
+
+        const headGeo = new THREE.SphereGeometry(0.36, 14, 12);
+        const headMesh = createOutlinedMesh(headGeo, MATS.skin, MATS.gokuOutline);
+        headMesh.scale.set(0.96, 1.04, 0.98);
+        headGroup.add(headMesh);
+
+        const earGeo = new THREE.SphereGeometry(0.09, 8, 8);
+        const leftEar = createOutlinedMesh(earGeo, MATS.skin, MATS.gokuOutline);
+        leftEar.position.set(0.34, -0.02, -0.02);
+        leftEar.scale.set(0.55, 1.1, 0.8);
+        const rightEar = leftEar.clone();
+        rightEar.position.x = -0.34;
+        headGroup.add(leftEar, rightEar);
+
+        const eyeWhiteGeo = new THREE.SphereGeometry(0.068, 8, 8);
+        const pupilGeo = new THREE.SphereGeometry(0.038, 8, 8);
+        const browGeo = new THREE.BoxGeometry(0.13, 0.032, 0.03);
+
+        [-1, 1].forEach((side) => {
+            const eyeW = new THREE.Mesh(eyeWhiteGeo, MATS.eyeWhite);
+            eyeW.position.set(side * 0.125, 0.02, 0.31);
+            eyeW.scale.set(0.85, 1.25, 0.45);
+            headGroup.add(eyeW);
+
+            const pupil = new THREE.Mesh(pupilGeo, MATS.eyeBlack);
+            pupil.position.set(side * 0.12, 0.02, 0.345);
+            pupil.scale.set(0.8, 1.2, 0.4);
+            headGroup.add(pupil);
+
+            const brow = new THREE.Mesh(browGeo, MATS.eyeBlack);
+            brow.position.set(side * 0.13, 0.12, 0.33);
+            brow.rotation.z = side * -0.24;
+            headGroup.add(brow);
+        });
+
+        const hairGroup = new THREE.Group();
+        headGroup.add(hairGroup);
+
+        const hairCapGeo = new THREE.SphereGeometry(0.38, 12, 10);
+        const hairCap = createOutlinedMesh(hairCapGeo, MATS.hair, MATS.gokuHairOutline);
+        hairCap.position.set(0, 0.07, -0.04);
+        hairGroup.add(hairCap);
+
+        const spikeGeo = new THREE.ConeGeometry(0.19, 0.65, 5);
+        spikeGeo.translate(0, 0.28, 0);
+
+        const spikeConfigs = [
+            { pos: [-0.22, 0.22, 0.0], rot: [0.05, 0.0, 0.92], scale: [1.1, 1.22, 0.9] },
+            { pos: [-0.26, 0.06, -0.02], rot: [-0.05, 0.0, 1.28], scale: [1.0, 1.15, 0.85] },
+            { pos: [-0.22, -0.08, -0.05], rot: [-0.12, 0.0, 1.62], scale: [0.9, 1.0, 0.8] },
+            { pos: [-0.14, 0.34, -0.04], rot: [-0.15, 0.0, 0.52], scale: [1.05, 1.18, 0.9] },
+
+            { pos: [0.22, 0.20, 0.0], rot: [0.05, 0.0, -0.98], scale: [1.1, 1.2, 0.9] },
+            { pos: [0.25, 0.03, -0.03], rot: [-0.08, 0.0, -1.35], scale: [1.0, 1.12, 0.85] },
+            { pos: [0.20, -0.10, -0.06], rot: [-0.15, 0.0, -1.68], scale: [0.85, 0.95, 0.8] },
+
+            { pos: [0.05, 0.34, -0.12], rot: [-0.55, 0.1, -0.25], scale: [1.1, 1.15, 0.95] },
+            { pos: [-0.12, 0.28, -0.22], rot: [-0.95, -0.2, 0.35], scale: [1.0, 1.05, 0.85] },
+            { pos: [0.14, 0.18, -0.25], rot: [-1.15, 0.25, -0.4], scale: [0.95, 1.0, 0.85] },
+            { pos: [0.0, 0.02, -0.28], rot: [-1.45, 0.0, 0.0], scale: [0.9, 0.9, 0.8] },
+
+            { pos: [-0.08, 0.25, 0.24], rot: [2.15, 0.0, 0.22], scale: [0.62, 0.72, 0.55] },
+            { pos: [0.09, 0.26, 0.24], rot: [2.2, 0.0, -0.28], scale: [0.58, 0.65, 0.5] }
+        ];
+
+        spikeConfigs.forEach((sc) => {
+            const spike = createOutlinedMesh(spikeGeo, MATS.hair, MATS.gokuHairOutline);
+            spike.position.set(...sc.pos);
+            spike.rotation.set(...sc.rot);
+            spike.scale.set(...sc.scale);
+            hairGroup.add(spike);
+        });
+
+        function createArm(side) {
+            const armPivot = new THREE.Group();
+            armPivot.position.set(side * 0.46, 0.52, 0.04);
+
+            const sleeve = createOutlinedMesh(
+                new THREE.SphereGeometry(0.19, 10, 8),
+                MATS.giOrange,
+                MATS.gokuOutline
+            );
+            sleeve.scale.set(1.1, 0.95, 1.0);
+            armPivot.add(sleeve);
+
+            const armCyl = createOutlinedMesh(
+                new THREE.CylinderGeometry(0.11, 0.095, 0.52, 8),
+                MATS.skin,
+                MATS.gokuOutline
+            );
+            armCyl.position.set(side * 0.14, -0.24, 0.12);
+            armCyl.rotation.z = side * 0.42;
+            armCyl.rotation.x = -0.45;
+            armPivot.add(armCyl);
+
+            const band = createOutlinedMesh(
+                new THREE.CylinderGeometry(0.11, 0.11, 0.14, 8),
+                MATS.giBlue,
+                MATS.gokuOutline
+            );
+            band.position.set(side * 0.23, -0.42, 0.24);
+            band.rotation.z = side * 0.42;
+            band.rotation.x = -0.45;
+            armPivot.add(band);
+
+            const fist = createOutlinedMesh(
+                new THREE.SphereGeometry(0.115, 8, 8),
+                MATS.skin,
+                MATS.gokuOutline
+            );
+            fist.position.set(side * 0.28, -0.52, 0.30);
+            armPivot.add(fist);
+
+            return armPivot;
+        }
+
+        torsoGroup.add(createArm(1), createArm(-1));
+
+        function createLeg(side, zOffset) {
+            const legGroup = new THREE.Group();
+            legGroup.position.set(side * 0.28, 0.78, zOffset);
+
+            const thigh = createOutlinedMesh(
+                new THREE.SphereGeometry(0.28, 10, 10),
+                MATS.giOrange,
+                MATS.gokuOutline
+            );
+            thigh.position.set(side * 0.08, -0.22, 0.12);
+            thigh.scale.set(0.95, 1.25, 1.15);
+            thigh.rotation.x = -0.55;
+            thigh.rotation.z = side * 0.25;
+            legGroup.add(thigh);
+
+            const boot = createOutlinedMesh(
+                new THREE.CylinderGeometry(0.11, 0.13, 0.42, 8),
+                MATS.giBlue,
+                MATS.gokuOutline
+            );
+            boot.position.set(side * 0.16, -0.58, 0.05);
+            legGroup.add(boot);
+
+            const foot = createOutlinedMesh(
+                new THREE.SphereGeometry(0.14, 8, 8),
+                MATS.giBlue,
+                MATS.gokuOutline
+            );
+            foot.position.set(side * 0.16, -0.76, 0.14);
+            foot.scale.set(0.85, 0.65, 1.45);
+            legGroup.add(foot);
+
+            return legGroup;
+        }
+
+        bodyRig.add(createLeg(1, 0.22), createLeg(-1, -0.18));
+
+        // ============================================================================
+        // 5. TRAIL SYSTEM (VOLUMETRIC PUFF PARTICLES + SPEED RIBBON + SPARKS)
+        // ============================================================================
+        const trailCount = CONFIG.TRAIL_POOL_SIZE;
+        const trailPositions = new Float32Array(trailCount * 3);
+        const trailSizes = new Float32Array(trailCount);
+        const trailAges = new Float32Array(trailCount);
+        const trailSeeds = new Float32Array(trailCount);
+
+        const trailParticlesData = [];
+        for (let i = 0; i < trailCount; i++) {
+            trailAges[i] = 2.0;
+            trailSeeds[i] = Math.random() * 100.0;
+            trailParticlesData.push({
+                vel: new THREE.Vector3(),
+                age: 2.0,
+                maxLife: 1.0,
+                baseSize: 1.0
+            });
+        }
+
+        const trailGeometry = new THREE.BufferGeometry();
+        trailGeometry.setAttribute('position', new THREE.BufferAttribute(trailPositions, 3));
+        trailGeometry.setAttribute('aSize', new THREE.BufferAttribute(trailSizes, 1));
+        trailGeometry.setAttribute('aAge', new THREE.BufferAttribute(trailAges, 1));
+        trailGeometry.setAttribute('aSeed', new THREE.BufferAttribute(trailSeeds, 1));
+
+        const trailMaterial = new THREE.ShaderMaterial({
+            transparent: true,
+            depthWrite: false,
+            uniforms: {
+                uScale: { value: initSize.height * 0.55 },
+                uColorStart: { value: new THREE.Color('#ffe042') },
+                uColorMid: { value: new THREE.Color('#fff4a3') },
+                uColorEnd: { value: new THREE.Color('#ffffff') },
+                uColorShadow: { value: new THREE.Color('#f5983b') }
+            },
+            vertexShader: `
+                attribute float aSize;
+                attribute float aAge;
+                attribute float aSeed;
+                uniform float uScale;
+
+                varying float vAge;
+                varying float vSeed;
+
+                void main() {
+                  vAge = aAge;
+                  vSeed = aSeed;
+                  if (aAge >= 1.0) {
+                    gl_Position = vec4(2.0, 2.0, 2.0, 1.0);
+                    gl_PointSize = 0.0;
+                    return;
+                  }
+                  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                  gl_Position = projectionMatrix * mvPosition;
+                  gl_PointSize = (aSize * uScale) / max(-mvPosition.z, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 uColorStart;
+                uniform vec3 uColorMid;
+                uniform vec3 uColorEnd;
+                uniform vec3 uColorShadow;
+
+                varying float vAge;
+                varying float vSeed;
+
+                void main() {
+                  if (vAge >= 1.0) discard;
+
+                  vec2 uv = gl_PointCoord * 2.0 - 1.0;
+                  float angle = vSeed + vAge * 2.2;
+                  float c = cos(angle);
+                  float s = sin(angle);
+                  vec2 ruv = mat2(c, -s, s, c) * uv;
+
+                  float theta = atan(ruv.y, ruv.x);
+                  float bumps = 0.12 * sin(theta * 5.0 + vSeed) + 0.07 * cos(theta * 3.0);
+                  float dist = length(ruv) - bumps;
+
+                  if (dist > 0.95) discard;
+
+                  float radialAlpha = smoothstep(0.95, 0.25, dist);
+                  float alpha = radialAlpha * smoothstep(0.0, 0.08, vAge) * pow(1.0 - vAge, 1.35) * 0.92;
+
+                  float fakeLight = dot(normalize(vec3(uv.x, -uv.y, 0.6)), normalize(vec3(0.4, 0.7, 0.5)));
+                  float toonBand = smoothstep(-0.05, 0.15, fakeLight);
+
+                  vec3 baseCol = mix(uColorStart, uColorMid, smoothstep(0.0, 0.45, vAge));
+                  baseCol = mix(baseCol, uColorEnd, smoothstep(0.45, 1.0, vAge));
+
+                  vec3 puffCol = mix(uColorShadow, baseCol, toonBand);
+                  gl_FragColor = vec4(puffCol, alpha);
+                }
+            `
+        });
+
+        const trailPoints = new THREE.Points(trailGeometry, trailMaterial);
+        trailPoints.frustumCulled = false;
+        scene.add(trailPoints);
+
+        let trailCursor = 0;
+        let trailEmitAccumulator = 0;
+
+        function emitTrailPuff(worldPos, speedRatio) {
+            const idx = trailCursor;
+            trailCursor = (trailCursor + 1) % trailCount;
+
+            const p = trailParticlesData[idx];
+            p.age = 0.001;
+            p.maxLife = 0.75 + Math.random() * 0.65 + speedRatio * 0.45;
+            p.baseSize = 1.65 + Math.random() * 0.85 + speedRatio * 0.65;
+
+            const spread = 0.45;
+            trailPositions[idx * 3 + 0] = worldPos.x + (Math.random() - 0.5) * spread;
+            trailPositions[idx * 3 + 1] = worldPos.y + (Math.random() - 0.5) * spread;
+            trailPositions[idx * 3 + 2] = worldPos.z + (Math.random() - 0.5) * spread;
+
+            p.vel.set(
+                (Math.random() - 0.5) * 3.2,
+                1.2 + Math.random() * 2.2,
+                (Math.random() - 0.5) * 3.2
+            );
+        }
+
+        // Ribbon Trail
+        const ribbonSegs = CONFIG.RIBBON_LENGTH;
+        const ribbonHistory = [];
+        for (let i = 0; i < ribbonSegs; i++) {
+            ribbonHistory.push(playerRoot.position.clone());
+        }
+
+        const ribbonVerts = new Float32Array(ribbonSegs * 2 * 3);
+        const ribbonUVs = new Float32Array(ribbonSegs * 2 * 2);
+        const ribbonIndices = [];
+
+        for (let i = 0; i < ribbonSegs; i++) {
+            const u = i / (ribbonSegs - 1);
+            ribbonUVs[i * 4 + 0] = u;
+            ribbonUVs[i * 4 + 1] = 0;
+            ribbonUVs[i * 4 + 2] = u;
+            ribbonUVs[i * 4 + 3] = 1;
+
+            if (i < ribbonSegs - 1) {
+                const a = i * 2;
+                const b = i * 2 + 1;
+                const c = (i + 1) * 2;
+                const d = (i + 1) * 2 + 1;
+                ribbonIndices.push(a, b, c, b, d, c);
+            }
+        }
+
+        const ribbonGeo = new THREE.BufferGeometry();
+        ribbonGeo.setAttribute('position', new THREE.BufferAttribute(ribbonVerts, 3));
+        ribbonGeo.setAttribute('uv', new THREE.BufferAttribute(ribbonUVs, 2));
+        ribbonGeo.setIndex(ribbonIndices);
+
+        const ribbonMat = new THREE.ShaderMaterial({
+            side: THREE.DoubleSide,
+            transparent: true,
+            depthWrite: false,
+            blending: THREE.AdditiveBlending,
+            uniforms: {
+                uColorHead: { value: new THREE.Color('#fff6b3') },
+                uColorTail: { value: new THREE.Color('#ffae19') },
+                uOpacity: { value: 0.75 }
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                  vUv = uv;
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 uColorHead;
+                uniform vec3 uColorTail;
+                uniform float uOpacity;
+                varying vec2 vUv;
+
+                void main() {
+                  float lengthFade = pow(1.0 - vUv.x, 1.7);
+                  float edgeFade = sin(vUv.y * 3.14159265);
+                  vec3 col = mix(uColorHead, uColorTail, vUv.x);
+                  gl_FragColor = vec4(col, lengthFade * edgeFade * uOpacity);
+                }
+            `
+        });
+
+        const ribbonMesh = new THREE.Mesh(ribbonGeo, ribbonMat);
+        ribbonMesh.frustumCulled = false;
+        scene.add(ribbonMesh);
+
+        // Speed Sparks
+        const sparkGroup = new THREE.Group();
+        scene.add(sparkGroup);
+        const sparkGeo = new THREE.BoxGeometry(0.07, 0.07, 2.8);
+        const sparkMat = new THREE.MeshBasicMaterial({
+            color: '#fff9c4',
+            transparent: true,
+            opacity: 0.85
+        });
+
+        const sparks = [];
+        for (let i = 0; i < CONFIG.SPARK_POOL_SIZE; i++) {
+            const mesh = new THREE.Mesh(sparkGeo, sparkMat.clone());
+            mesh.visible = false;
+            sparkGroup.add(mesh);
+            sparks.push({ mesh, vel: new THREE.Vector3(), life: 0 });
+        }
+        let sparkCursor = 0;
+
+        function spawnSpeedSpark(origin, forwardDir, speed) {
+            const s = sparks[sparkCursor];
+            sparkCursor = (sparkCursor + 1) % sparks.length;
+
+            s.life = 0.28 + Math.random() * 0.22;
+            s.mesh.visible = true;
+
+            const angle = Math.random() * Math.PI * 2;
+            const radius = 1.4 + Math.random() * 2.8;
+            s.mesh.position.copy(origin);
+            s.mesh.position.x += Math.cos(angle) * radius;
+            s.mesh.position.y += Math.sin(angle) * radius * 0.7;
+            s.mesh.position.z += (Math.random() - 0.5) * 2.0;
+
+            const target = s.mesh.position.clone().add(forwardDir);
+            s.mesh.lookAt(target);
+            s.vel.copy(forwardDir).multiplyScalar(-speed * 0.45);
+        }
+
+        // ============================================================================
+        // 6. ENVIRONMENT: SKY DOME, CLOUDS, MT. PAOZU & RINGS
+        // ============================================================================
+        const skyGeo = new THREE.SphereGeometry(950, 32, 24);
+        const skyMat = new THREE.ShaderMaterial({
+            side: THREE.BackSide,
+            depthWrite: false,
+            uniforms: {
+                uTopColor: { value: new THREE.Color('#0952cc') },
+                uMidColor: { value: new THREE.Color('#2ea0f7') },
+                uHorizonColor: { value: FOG_COLOR },
+                uSunDir: { value: sunDirection }
+            },
+            vertexShader: `
+                varying vec3 vWorldDir;
+                void main() {
+                  vWorldDir = normalize(position);
+                  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform vec3 uTopColor;
+                uniform vec3 uMidColor;
+                uniform vec3 uHorizonColor;
+                uniform vec3 uSunDir;
+                varying vec3 vWorldDir;
+
+                void main() {
+                  float h = clamp(vWorldDir.y, 0.0, 1.0);
+                  vec3 col = mix(uHorizonColor, uMidColor, smoothstep(0.0, 0.28, h));
+                  col = mix(col, uTopColor, smoothstep(0.28, 0.88, h));
+
+                  float sunDot = dot(normalize(vWorldDir), uSunDir);
+                  float sunHalo = smoothstep(0.96, 0.992, sunDot) * 0.35;
+                  float sunCore = smoothstep(0.995, 0.997, sunDot);
+                  col = mix(col, vec3(1.0, 0.98, 0.82), clamp(sunHalo + sunCore, 0.0, 1.0));
+
+                  gl_FragColor = vec4(col, 1.0);
+                }
+            `
+        });
+        const skyDome = new THREE.Mesh(skyGeo, skyMat);
+        scene.add(skyDome);
+
+        const cloudSphereGeo = new THREE.IcosahedronGeometry(1, 2);
+        const worldClouds = [];
+
+        function createCloudCluster() {
+            const group = new THREE.Group();
+            const puffCount = 5 + Math.floor(Math.random() * 5);
+
+            for (let i = 0; i < puffCount; i++) {
+                const mesh = createOutlinedMesh(cloudSphereGeo, MATS.skyCloud, MATS.skyCloudOutline);
+                const r = (i === 0 ? 12 : 6 + Math.random() * 7);
+                const angle = (i / puffCount) * Math.PI * 2;
+                const dist = i === 0 ? 0 : 7 + Math.random() * 9;
+
+                mesh.position.set(
+                    Math.cos(angle) * dist,
+                    (i === 0 ? 2.5 : Math.random() * 4.5),
+                    Math.sin(angle) * dist * 0.75
+                );
+                mesh.scale.set(r * 1.25, r * 0.78, r * 1.05);
+                group.add(mesh);
+            }
+            return group;
+        }
+
+        for (let i = 0; i < CONFIG.CLOUD_CLUSTER_COUNT; i++) {
+            const cluster = createCloudCluster();
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 45 + Math.random() * (CONFIG.WORLD_WRAP_RADIUS - 50);
+            cluster.position.set(
+                Math.cos(angle) * dist,
+                35 + Math.random() * 190,
+                Math.sin(angle) * dist
+            );
+            cluster.rotation.y = Math.random() * Math.PI * 2;
+            cluster.scale.setScalar(0.75 + Math.random() * 1.25);
+            scene.add(cluster);
+
+            worldClouds.push({
+                mesh: cluster,
+                driftSpeed: 1.5 + Math.random() * 2.8,
+                bobPhase: Math.random() * Math.PI * 2
+            });
+        }
+
+        const mountainsGroup = new THREE.Group();
+        scene.add(mountainsGroup);
+
+        const spireGeo = new THREE.CylinderGeometry(14, 28, 160, 10);
+        const capGeo = new THREE.SphereGeometry(16.5, 10, 8);
+
+        for (let i = 0; i < 18; i++) {
+            const angle = (i / 18) * Math.PI * 2 + (Math.random() - 0.5) * 0.22;
+            const dist = 340 + Math.random() * 140;
+            const heightScale = 0.7 + Math.random() * 1.35;
+
+            const spireGroup = new THREE.Group();
+            spireGroup.position.set(
+                Math.cos(angle) * dist,
+                -25 + heightScale * 30,
+                Math.sin(angle) * dist
+            );
+
+            const rock = new THREE.Mesh(spireGeo, MATS.mountainRock);
+            rock.scale.set(1.0 + Math.random() * 0.4, heightScale, 1.0 + Math.random() * 0.4);
+            spireGroup.add(rock);
+
+            const grassCap = new THREE.Mesh(capGeo, MATS.mountainGrass);
+            grassCap.position.y = 78 * heightScale;
+            grassCap.scale.set(1.2, 0.75, 1.2);
+            spireGroup.add(grassCap);
+
+            mountainsGroup.add(spireGroup);
+        }
+
+        const ringGeo = new THREE.TorusGeometry(6.2, 0.58, 10, 28);
+        const starBallGeo = new THREE.SphereGeometry(1.15, 12, 10);
+        const starBallMat = createToonMaterial({
+            highlight: '#ffe680',
+            base: '#ff8c1a',
+            shadow: '#d9460f',
+            rimColor: '#ffffff',
+            rimStrength: 0.9
+        });
+
+        const skyRings = [];
+        let ringsCollected = 0;
+
+        const playerState = {
+            speed: 22.0,
+            verticalVel: 0.0,
+            yaw: 0.0,
+            yawRate: 0.0,
+            roll: 0.0,
+            pitch: 0.0
+        };
+
+        function placeRingAhead(ringObj, indexOffset = 1) {
+            const forward = new THREE.Vector3(0, 0, 1).applyAxisAngle(
+                new THREE.Vector3(0, 1, 0),
+                playerState.yaw + (Math.random() - 0.5) * 1.2
+            );
+            const dist = 85 + indexOffset * 55 + Math.random() * 65;
+            ringObj.group.position.copy(playerRoot.position).addScaledVector(forward, dist);
+            ringObj.group.position.y = THREE.MathUtils.clamp(
+                playerRoot.position.y + (Math.random() - 0.5) * 55,
+                45,
+                220
+            );
+            ringObj.group.lookAt(playerRoot.position);
+        }
+
+        for (let i = 0; i < CONFIG.RING_COUNT; i++) {
+            const group = new THREE.Group();
+            const torus = createOutlinedMesh(ringGeo, MATS.ringGold, MATS.gokuOutline);
+            group.add(torus);
+
+            const orb = createOutlinedMesh(starBallGeo, starBallMat, MATS.gokuOutline);
+            group.add(orb);
+
+            const glow = new THREE.Sprite(glowSpriteMat);
+            glow.scale.set(6.5, 6.5, 1);
+            group.add(glow);
+
+            scene.add(group);
+            const ringObj = { group, torus, orb, phase: i * 0.8 };
+            skyRings.push(ringObj);
+            placeRingAhead(ringObj, i * 0.65 + 0.5);
+        }
+
+        // ============================================================================
+        // 7. INPUT HANDLING & WEB AUDIO CHIME
+        // ============================================================================
+        const keys = {
+            forward: false,
+            backward: false,
+            left: false,
+            right: false,
+            up: false,
+            down: false,
+            camLeft: false,
+            camRight: false
+        };
+
+        window.addEventListener('keydown', (e) => {
+            switch (e.code) {
+                case 'KeyW':
+                case 'ArrowUp':
+                    keys.forward = true;
+                    e.preventDefault();
+                    break;
+                case 'KeyS':
+                case 'ArrowDown':
+                    keys.backward = true;
+                    e.preventDefault();
+                    break;
+                case 'KeyA':
+                case 'ArrowLeft':
+                    keys.left = true;
+                    e.preventDefault();
+                    break;
+                case 'KeyD':
+                case 'ArrowRight':
+                    keys.right = true;
+                    e.preventDefault();
+                    break;
+                case 'Space':
+                    keys.up = true;
+                    e.preventDefault();
+                    break;
+                case 'ShiftLeft':
+                case 'ShiftRight':
+                    keys.down = true;
+                    break;
+                case 'KeyQ':
+                    keys.camLeft = true;
+                    break;
+                case 'KeyE':
+                    keys.camRight = true;
+                    break;
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            switch (e.code) {
+                case 'KeyW':
+                case 'ArrowUp':
+                    keys.forward = false;
+                    break;
+                case 'KeyS':
+                case 'ArrowDown':
+                    keys.backward = false;
+                    break;
+                case 'KeyA':
+                case 'ArrowLeft':
+                    keys.left = false;
+                    break;
+                case 'KeyD':
+                case 'ArrowRight':
+                    keys.right = false;
+                    break;
+                case 'Space':
+                    keys.up = false;
+                    break;
+                case 'ShiftLeft':
+                case 'ShiftRight':
+                    keys.down = false;
+                    break;
+                case 'KeyQ':
+                    keys.camLeft = false;
+                    break;
+                case 'KeyE':
+                    keys.camRight = false;
+                    break;
+            }
+        });
+
+        let isDragging = false;
+        let prevPointerX = 0;
+        let prevPointerY = 0;
+        let camOrbitYaw = 0;
+        let camOrbitPitch = 0.14;
+
+        renderer.domElement.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            prevPointerX = e.clientX;
+            prevPointerY = e.clientY;
+            viewportEl.focus();
+        });
+
+        window.addEventListener('mouseup', () => { isDragging = false; });
+
+        window.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - prevPointerX;
+            const dy = e.clientY - prevPointerY;
+            prevPointerX = e.clientX;
+            prevPointerY = e.clientY;
+            camOrbitYaw -= dx * 0.0065;
+            camOrbitPitch = THREE.MathUtils.clamp(camOrbitPitch + dy * 0.005, -0.35, 0.75);
+        });
+
+        renderer.domElement.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isDragging = true;
+                prevPointerX = e.touches[0].clientX;
+                prevPointerY = e.touches[0].clientY;
+            }
+        }, { passive: true });
+
+        window.addEventListener('touchend', () => { isDragging = false; });
+
+        window.addEventListener('touchmove', (e) => {
+            if (!isDragging || e.touches.length !== 1) return;
+            const dx = e.touches[0].clientX - prevPointerX;
+            const dy = e.touches[0].clientY - prevPointerY;
+            prevPointerX = e.touches[0].clientX;
+            prevPointerY = e.touches[0].clientY;
+            camOrbitYaw -= dx * 0.0065;
+            camOrbitPitch = THREE.MathUtils.clamp(camOrbitPitch + dy * 0.005, -0.35, 0.75);
+        }, { passive: true });
+
+        let audioCtx = null;
+        function playRingChime() {
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContextClass) audioCtx = new AudioContextClass();
+                }
+                if (!audioCtx) return;
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                const now = audioCtx.currentTime;
+                [587.33, 880.0, 1174.66].forEach((freq, idx) => {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(freq, now + idx * 0.055);
+                    gain.gain.setValueAtTime(0.12, now + idx * 0.055);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.055 + 0.35);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now + idx * 0.055);
+                    osc.stop(now + idx * 0.055 + 0.36);
+                });
+            } catch (err) { }
+        }
+
+        // ============================================================================
+        // 8. MAIN GAME LOOP & RESIZE OBSERVER
+        // ============================================================================
+        const speedLinesEl = document.getElementById('speed-lines');
+        const hudSpeedEl = document.getElementById('hud-speed');
+        const hudAltEl = document.getElementById('hud-alt');
+        const hudRingsEl = document.getElementById('hud-rings');
+
+        function triggerRingCollected(ringPos) {
+            ringsCollected++;
+            playRingChime();
+            for (let i = 0; i < 18; i++) {
+                emitTrailPuff(ringPos, 1.3);
+            }
+        }
+
+        const clock = new THREE.Clock();
+        const tailWorldPos = new THREE.Vector3();
+        const camRightVec = new THREE.Vector3();
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            const dt = Math.min(clock.getDelta(), 0.05);
+            const elapsed = clock.getElapsedTime();
+
+            let targetAccel = 0;
+            if (keys.forward) targetAccel += CONFIG.ACCELERATION;
+            if (keys.backward) targetAccel -= CONFIG.ACCELERATION * 0.85;
+
+            if (targetAccel !== 0) {
+                playerState.speed += targetAccel * dt;
+            } else {
+                playerState.speed = THREE.MathUtils.lerp(
+                    playerState.speed,
+                    CONFIG.IDLE_CRUISE_SPEED,
+                    CONFIG.DAMPING * dt * 0.45
+                );
+            }
+            playerState.speed -= playerState.speed * CONFIG.DAMPING * 0.18 * dt;
+            playerState.speed = THREE.MathUtils.clamp(
+                playerState.speed,
+                CONFIG.MIN_SPEED,
+                CONFIG.MAX_SPEED
+            );
+
+            let turnInput = 0;
+            if (keys.left) turnInput += 1;
+            if (keys.right) turnInput -= 1;
+
+            playerState.yawRate = THREE.MathUtils.lerp(
+                playerState.yawRate,
+                turnInput * CONFIG.TURN_SPEED,
+                6.5 * dt
+            );
+            playerState.yaw += playerState.yawRate * dt;
+
+            let vertInput = 0;
+            if (keys.up) vertInput += 1;
+            if (keys.down) vertInput -= 1;
+
+            playerState.verticalVel += vertInput * CONFIG.VERTICAL_ACCEL * dt;
+            playerState.verticalVel -= playerState.verticalVel * CONFIG.VERTICAL_DAMPING * dt;
+
+            const forwardDir = new THREE.Vector3(
+                Math.sin(playerState.yaw),
+                0,
+                Math.cos(playerState.yaw)
+            );
+
+            playerRoot.position.addScaledVector(forwardDir, playerState.speed * dt);
+            playerRoot.position.y = THREE.MathUtils.clamp(
+                playerRoot.position.y + playerState.verticalVel * dt,
+                15,
+                320
+            );
+            playerRoot.rotation.y = playerState.yaw;
+
+            const speedRatio = THREE.MathUtils.clamp(
+                Math.abs(playerState.speed) / CONFIG.MAX_SPEED,
+                0,
+                1
+            );
+
+            const targetRoll = -turnInput * CONFIG.BANK_MAX_ANGLE * (0.45 + 0.55 * speedRatio);
+            const targetPitch = THREE.MathUtils.clamp(
+                -(playerState.verticalVel / 22.0) * CONFIG.PITCH_MAX_ANGLE + speedRatio * 0.08,
+                -CONFIG.PITCH_MAX_ANGLE,
+                CONFIG.PITCH_MAX_ANGLE
+            );
+
+            playerState.roll = THREE.MathUtils.lerp(playerState.roll, targetRoll, 7.0 * dt);
+            playerState.pitch = THREE.MathUtils.lerp(playerState.pitch, targetPitch, 7.0 * dt);
+
+            const bobOffset = Math.sin(elapsed * 3.1) * 0.24 * (1.0 - speedRatio * 0.45);
+            playerVisuals.position.y = bobOffset;
+            playerVisuals.rotation.z = playerState.roll;
+            playerVisuals.rotation.x = playerState.pitch;
+
+            torsoGroup.rotation.x = 0.24 + speedRatio * 0.28;
+            headGroup.rotation.x = -0.20 - speedRatio * 0.22;
+            sashPivot.rotation.x = 0.25 + speedRatio * 0.65 + Math.sin(elapsed * 14.0) * (0.12 + speedRatio * 0.18);
+            sashPivot.rotation.z = Math.cos(elapsed * 11.0) * 0.15;
+
+            for (let i = 0; i < nimbusPuffs.length; i++) {
+                const p = nimbusPuffs[i];
+                const wave = Math.sin(elapsed * p.speed + p.phase);
+                const scaleFactor = 1.0 + wave * CONFIG.NIMBUS_BREATHE_AMP;
+
+                p.mesh.scale.set(
+                    p.baseScale.x * scaleFactor,
+                    p.baseScale.y * (1.0 - wave * CONFIG.NIMBUS_BREATHE_AMP * 0.5),
+                    p.baseScale.z * scaleFactor
+                );
+                p.mesh.position.y = p.basePos.y + Math.cos(elapsed * p.speed * 0.8 + p.phase) * 0.06;
+                p.mesh.rotateOnAxis(p.rotAxis, 0.35 * dt);
+            }
+
+            const glowPulse = 1.0 + Math.sin(elapsed * 6.0) * 0.08 + speedRatio * 0.25;
+            coreAuraSprite.scale.set(5.8 * glowPulse, 3.9 * glowPulse, 1);
+            tailAuraSprite.scale.set(3.8 * glowPulse, 2.8 * glowPulse, 1);
+
+            tailWorldPos.set(0, 0.05, -2.35);
+            nimbusGroup.localToWorld(tailWorldPos);
+
+            const emitRate = 14 + speedRatio * CONFIG.TRAIL_EMIT_RATE;
+            trailEmitAccumulator += emitRate * dt;
+            while (trailEmitAccumulator >= 1.0) {
+                emitTrailPuff(tailWorldPos, speedRatio);
+                trailEmitAccumulator -= 1.0;
+            }
+
+            for (let i = 0; i < trailCount; i++) {
+                const p = trailParticlesData[i];
+                if (p.age >= 1.0) continue;
+
+                p.age += dt / p.maxLife;
+                trailAges[i] = p.age;
+
+                if (p.age < 1.0) {
+                    const seed = trailSeeds[i];
+                    const turbX = Math.sin(elapsed * 3.5 + seed) * CONFIG.TRAIL_TURBULENCE;
+                    const turbY = Math.cos(elapsed * 2.8 + seed * 1.3) * (CONFIG.TRAIL_TURBULENCE * 0.6);
+                    const turbZ = Math.cos(elapsed * 3.5 + seed) * CONFIG.TRAIL_TURBULENCE;
+
+                    trailPositions[i * 3 + 0] += (p.vel.x + turbX) * dt;
+                    trailPositions[i * 3 + 1] += (p.vel.y + turbY) * dt;
+                    trailPositions[i * 3 + 2] += (p.vel.z + turbZ) * dt;
+
+                    trailSizes[i] = p.baseSize * (1.0 + p.age * CONFIG.TRAIL_PUFF_GROWTH);
+                }
+            }
+            trailGeometry.attributes.position.needsUpdate = true;
+            trailGeometry.attributes.aSize.needsUpdate = true;
+            trailGeometry.attributes.aAge.needsUpdate = true;
+
+            for (let i = ribbonSegs - 1; i > 0; i--) {
+                ribbonHistory[i].lerp(ribbonHistory[i - 1], Math.min(1.0, dt * 28.0));
+            }
+            ribbonHistory[0].copy(tailWorldPos);
+
+            camRightVec.set(1, 0, 0).applyQuaternion(playerRoot.quaternion);
+            for (let i = 0; i < ribbonSegs; i++) {
+                const u = i / (ribbonSegs - 1);
+                const halfWidth = (1.0 - u) * (0.55 + speedRatio * 0.55);
+                const pt = ribbonHistory[i];
+
+                ribbonVerts[i * 6 + 0] = pt.x - camRightVec.x * halfWidth;
+                ribbonVerts[i * 6 + 1] = pt.y - camRightVec.y * halfWidth;
+                ribbonVerts[i * 6 + 2] = pt.z - camRightVec.z * halfWidth;
+
+                ribbonVerts[i * 6 + 3] = pt.x + camRightVec.x * halfWidth;
+                ribbonVerts[i * 6 + 4] = pt.y + camRightVec.y * halfWidth;
+                ribbonVerts[i * 6 + 5] = pt.z + camRightVec.z * halfWidth;
+            }
+            ribbonGeo.attributes.position.needsUpdate = true;
+            ribbonMat.uniforms.uOpacity.value = 0.25 + speedRatio * 0.65;
+
+            if (speedRatio > 0.62 && Math.random() < speedRatio * 0.85) {
+                spawnSpeedSpark(playerRoot.position, forwardDir, playerState.speed);
+            }
+            for (let i = 0; i < sparks.length; i++) {
+                const s = sparks[i];
+                if (s.life <= 0) continue;
+                s.life -= dt;
+                if (s.life <= 0) {
+                    s.mesh.visible = false;
+                } else {
+                    s.mesh.position.addScaledVector(s.vel, dt);
+                    s.mesh.material.opacity = s.life * 3.0;
+                }
+            }
+
+            if (keys.camLeft) camOrbitYaw += 1.8 * dt;
+            if (keys.camRight) camOrbitYaw -= 1.8 * dt;
+
+            if (!isDragging && !keys.camLeft && !keys.camRight && speedRatio > 0.25) {
+                camOrbitYaw = THREE.MathUtils.lerp(camOrbitYaw, 0, 1.6 * dt);
+            }
+
+            const totalCamYaw = playerState.yaw + camOrbitYaw;
+            const horizDist = CONFIG.CAMERA_DISTANCE * Math.cos(camOrbitPitch);
+            const vertDist = CONFIG.CAMERA_HEIGHT + CONFIG.CAMERA_DISTANCE * Math.sin(camOrbitPitch);
+
+            const desiredCamPos = new THREE.Vector3(
+                playerRoot.position.x - Math.sin(totalCamYaw) * horizDist,
+                playerRoot.position.y + vertDist,
+                playerRoot.position.z - Math.cos(totalCamYaw) * horizDist
+            );
+
+            camera.position.lerp(desiredCamPos, CONFIG.CAMERA_LERP * dt);
+
+            const lookTarget = new THREE.Vector3(
+                playerRoot.position.x + forwardDir.x * 4.5,
+                playerRoot.position.y + 1.1,
+                playerRoot.position.z + forwardDir.z * 4.5
+            );
+            camera.lookAt(lookTarget);
+
+            const targetFov = THREE.MathUtils.lerp(CONFIG.BASE_FOV, CONFIG.MAX_FOV, speedRatio * speedRatio);
+            if (Math.abs(camera.fov - targetFov) > 0.05) {
+                camera.fov = THREE.MathUtils.lerp(camera.fov, targetFov, 5.0 * dt);
+                camera.updateProjectionMatrix();
+            }
+
+            skyDome.position.copy(playerRoot.position);
+            mountainsGroup.position.x = playerRoot.position.x;
+            mountainsGroup.position.z = playerRoot.position.z;
+
+            const wrapR = CONFIG.WORLD_WRAP_RADIUS;
+            for (let i = 0; i < worldClouds.length; i++) {
+                const c = worldClouds[i];
+                c.mesh.position.x += c.driftSpeed * dt;
+
+                const dx = c.mesh.position.x - playerRoot.position.x;
+                const dz = c.mesh.position.z - playerRoot.position.z;
+                if (dx * dx + dz * dz > wrapR * wrapR) {
+                    const angle = playerState.yaw + (Math.random() - 0.5) * Math.PI * 1.3;
+                    const spawnDist = wrapR * (0.78 + Math.random() * 0.2);
+                    c.mesh.position.x = playerRoot.position.x + Math.sin(angle) * spawnDist;
+                    c.mesh.position.z = playerRoot.position.z + Math.cos(angle) * spawnDist;
+                    c.mesh.position.y = THREE.MathUtils.clamp(
+                        playerRoot.position.y + (Math.random() - 0.5) * 140,
+                        25,
+                        250
+                    );
+                }
+            }
+
+            for (let i = 0; i < skyRings.length; i++) {
+                const r = skyRings[i];
+                r.orb.rotation.y += 2.2 * dt;
+                r.group.position.y += Math.sin(elapsed * 2.5 + r.phase) * 0.04;
+
+                const distToPlayer = r.group.position.distanceTo(playerRoot.position);
+                if (distToPlayer < 7.8) {
+                    triggerRingCollected(r.group.position);
+                    placeRingAhead(r, 2.2);
+                } else if (distToPlayer > 340) {
+                    placeRingAhead(r, 1.5);
+                }
+            }
+
+            if (speedLinesEl) {
+                speedLinesEl.style.opacity = speedRatio > 0.78 ? String((speedRatio - 0.75) * 3.2) : '0';
+            }
+            if (hudSpeedEl) hudSpeedEl.textContent = Math.round(Math.abs(playerState.speed));
+            if (hudAltEl) hudAltEl.textContent = Math.round(playerRoot.position.y);
+            if (hudRingsEl) hudRingsEl.textContent = ringsCollected;
+
+            renderer.render(scene, camera);
+        }
+
+        function handleViewportResize() {
+            const { width, height } = getViewportSize();
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+            trailMaterial.uniforms.uScale.value = height * 0.55;
+        }
+
+        window.addEventListener('resize', handleViewportResize);
+        if (window.ResizeObserver) {
+            new ResizeObserver(handleViewportResize).observe(container);
+        }
+
+        window.addEventListener('load', animate);
+    </script>
+</body>
+
+</html>
